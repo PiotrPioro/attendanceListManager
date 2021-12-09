@@ -13,13 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>AddContract</title>
-    <style>
-        .error {
-            color: red;
-            border: 2px solid;
-        }
-    </style>
+    <title>Dodawanie szczegółów kontraktu</title>
 
     <!-- Custom fonts for this template-->
     <link href="<c:url value="/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet" type="text/css">
@@ -53,12 +47,12 @@
                             <input name="contractId" type="hidden" value="${contractId}">
 
                             Stanowisko:<form:input path="position"/><br>
-                            <form:errors path="position" cssClass="error"/><br>
+                            <form:errors path="position"/><br>
 
                             <p>Typ listy obecności:<br></p>
                             Uzupełniana na koniec miesiąca<form:radiobutton path="attendanceListType" value="uzupełniana na koniec miesiąca"/><br>
                             Uzupełniana na koniec dnia<form:radiobutton path="attendanceListType" value="uzupełniana na koniec dnia"/><br>
-                            <form:errors path="attendanceListType" cssClass="error"/><br>
+                            <form:errors path="attendanceListType"/><br>
 
                             <input type="submit" value="Zapisz"><br>
                         </form:form>

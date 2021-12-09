@@ -13,13 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>AddContract</title>
-    <style>
-        .error {
-            color: red;
-            border: 2px solid;
-        }
-    </style>
+    <title>Edytowanie kontraktu</title>
 
     <!-- Custom fonts for this template-->
     <link href="<c:url value="/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet" type="text/css">
@@ -49,13 +43,13 @@
                             <form:hidden path="id"/>
 
                             Nazwa kontraktu:<form:input path="name"/><br>
-                            <form:errors path="name" cssClass="error"/><br>
+                            <form:errors path="name"/><br>
 
                             Rodzaj usługi:<form:input path="typeOfService"/><br>
-                            <form:errors path="typeOfService" cssClass="error"/><br>
+                            <form:errors path="typeOfService"/><br>
 
                             Opis usługi:<form:input path="description"/><br>
-                            <form:errors path="description" cssClass="error"/><br>
+                            <form:errors path="description"/><br>
 
                             Wybierz administratora kontraktu:<form:select path="contractAdministrator" itemValue="id" itemLabel="fullName" items="${inspectors}" multiple="true"/><br>
                             <form:errors path="contractAdministrator"/><br>

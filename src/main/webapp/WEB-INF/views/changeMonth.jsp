@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Inspektor Kontrakty</title>
+    <title>Zmiana miesiąca dla administratora kontraktu</title>
 
     <!-- Custom fonts for this template-->
     <link href="<c:url value="/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet" type="text/css">
@@ -89,13 +89,6 @@
         <div class="sidebar-heading">
             Kontrakty
         </div>
-
-        <!-- Nav Item - addContract -->
-        <li class="nav-item">
-            <a class="nav-link" href="/contract/addContract">
-                <span>Dodaj kontrakt</span>
-            </a>
-        </li>
 
         <!-- Nav Item - attendance -->
         <li class="nav-item">

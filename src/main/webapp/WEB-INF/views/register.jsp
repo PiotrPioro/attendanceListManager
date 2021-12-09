@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Register</title>
+    <title>Tworzenie konta</title>
 
     <!-- Custom fonts for this template-->
     <link href="<c:url value="/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet" type="text/css">
@@ -56,11 +56,6 @@
                             <form:errors path="password"/><br>
 
                             Powtórz Hasło:<input name="repassword" type="password" placeholder="Powtórz hasło"/><br>
-
-                            <%--<form:hidden path="role" value="${primaryRole}"/>--%>
-
-                            <%--Lista kontraktów:<form:select path="contractList" itemValue="id" itemLabel="name" items="${contracts}" multiple="true"/><br>
-                            <form:errors path="contractList"/><br>--%>
 
                             <input type="submit" value="Zapisz"><br>
                         </form:form>

@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Inspektor Kontrakty</title>
+    <title>Lista obecności</title>
 
     <!-- Custom fonts for this template-->
     <link href="<c:url value="/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet" type="text/css">
@@ -260,20 +260,16 @@
 
                     <p>Lista obecności inspektora ${insp.fullName}:<br>
 
-                        <c:if test="${message.lenght > 1}">
-                            ${message}<br>
-                        </c:if>
-
                     <c:forEach items="${insp.contractList}" var="contractList">
                         ${contractList.name}:<br>
                             <c:forEach items="${contractList.contractDetails}" var="cd">
-                                <c:if test="${cd.inspectorId == insp.id}">
+                                <c:if test="${cd. inspectorId == insp.id}">
                                     <c:forEach items="${cd.listDaysAmount}" var="dayAmount">
                                         <c:if test="${dayAmount.monthNumber == monthValue && dayAmount.year == year}">
                                             {
                                                 <c:if test="${dayAmount.attendanceList != null}">
                                                     <c:forEach items="${dayAmount.attendanceList}" var="day">
-                                                        ${day.monthDay},
+                                                        ${day.monthDay}, ${day.id},
                                                     </c:forEach>
                                                 </c:if>
                                             }<br>
