@@ -1,23 +1,17 @@
 package com.openSource.attendanceListManager.service;
 
 import com.openSource.attendanceListManager.entity.ContractDetails;
-import com.openSource.attendanceListManager.entity.Inspector;
 import com.openSource.attendanceListManager.repository.ContractDetailsRepository;
-import com.openSource.attendanceListManager.repository.ContractRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @AllArgsConstructor
 public class ContractDetailService {
 
     private final ContractDetailsRepository contractDetailsRepository;
-    private final ContractRepository contractRepository;
 
     @Transactional
     public void addContractDetails(ContractDetails contractDetails){

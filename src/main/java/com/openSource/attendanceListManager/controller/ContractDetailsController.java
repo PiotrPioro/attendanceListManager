@@ -40,7 +40,7 @@ public class ContractDetailsController {
 
         List<DaysAmount> daysAmountList = daysAmountService.daysAmountList(contractDetails.getId());
         for(DaysAmount daysAmount : daysAmountList){
-            List<Days> daysList = daysService.findAllDAysByDaysAmountId(daysAmount.getId());
+            List<Days> daysList = daysService.findAllDaysByDaysAmountId(daysAmount.getId());
             daysAmount.setAttendanceList(daysList);
         }
 

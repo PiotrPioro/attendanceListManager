@@ -31,7 +31,7 @@
     <!-- Outer Row -->
     <div class="row justify-content-center">
         <div class="text-center">
-            <p><span style="font-size: xxx-large; color: red; "></span></p>
+            <p><span style="font-size: xxx-large; color: red; "></span>Ta funkcja nie jest obsługiwana</p>
             <a class="big" href="/login">Zaloguj</a>
         </div>
 

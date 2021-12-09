@@ -5,7 +5,6 @@ import com.openSource.attendanceListManager.repository.InspectorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
 import java.util.Optional;
 
 @Component

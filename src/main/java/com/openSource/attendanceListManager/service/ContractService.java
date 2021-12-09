@@ -68,11 +68,4 @@ public class ContractService {
         }
         return inspectorDetailsMap;
     }
-
-    @Transactional
-    public void addInspector(Inspector inspector, Long contractId){
-        Contract contract = findContractById(contractId);
-        contract.getInspectorList().add(inspector);
-        inspector.getContractList().add(contract);
-    }
 }

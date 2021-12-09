@@ -4,7 +4,6 @@ import com.openSource.attendanceListManager.entity.DaysAmount;
 import com.openSource.attendanceListManager.repository.DaysAmountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.List;
 

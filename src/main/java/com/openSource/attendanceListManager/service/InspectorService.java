@@ -2,7 +2,6 @@ package com.openSource.attendanceListManager.service;
 
 import com.openSource.attendanceListManager.entity.Inspector;
 import com.openSource.attendanceListManager.repository.InspectorRepository;
-import com.openSource.attendanceListManager.repository.RoleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import java.util.List;
 public class InspectorService{
 
     private final InspectorRepository inspectorRepository;
-    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional

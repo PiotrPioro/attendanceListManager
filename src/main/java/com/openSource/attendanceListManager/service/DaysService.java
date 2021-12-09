@@ -4,7 +4,6 @@ import com.openSource.attendanceListManager.entity.Days;
 import com.openSource.attendanceListManager.repository.DaysRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class DaysService {
     }
 
     @Transactional
-    public List<Days> findAllDAysByDaysAmountId(int daysAmountId){
+    public List<Days> findAllDaysByDaysAmountId(int daysAmountId){
         return daysRepository.findAllByDaysAmountId(daysAmountId);
     }
 }

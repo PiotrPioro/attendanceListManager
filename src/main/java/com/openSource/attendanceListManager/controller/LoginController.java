@@ -14,7 +14,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.validation.Valid;
 import java.util.List;
 
-
 @Controller
 @AllArgsConstructor
 @SessionAttributes("loggedInspector")

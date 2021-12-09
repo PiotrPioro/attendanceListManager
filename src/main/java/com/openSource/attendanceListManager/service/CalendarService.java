@@ -3,7 +3,6 @@ package com.openSource.attendanceListManager.service;
 import com.openSource.attendanceListManager.entity.Days;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -42,19 +41,9 @@ public class CalendarService {
         return calendarList;
     }
 
-    public int today(){
-        GregorianCalendar calendar = new GregorianCalendar();
-        return calendar.get(Calendar.DAY_OF_MONTH);
-    }
-
     public int currentMonth(){
         GregorianCalendar calendar = new GregorianCalendar();
         return calendar.get(Calendar.MONTH);
-    }
-
-    public int currentYear(){
-        GregorianCalendar calendar = new GregorianCalendar();
-        return calendar.get(Calendar.YEAR);
     }
 
     public String nameOfMonth(int month) {

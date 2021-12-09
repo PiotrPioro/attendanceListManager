@@ -41,8 +41,6 @@ public class Inspector {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Contract> contractList = new ArrayList<>();
 
-    /*@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    private Set<Role> role = new HashSet<>();*/
     private String role;
 
     public String getFullName(){

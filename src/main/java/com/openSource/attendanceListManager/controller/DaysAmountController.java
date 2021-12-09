@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -45,7 +44,7 @@ public class DaysAmountController {
         if(result.hasErrors()){
             return "addDaysAmount";
         }
-        List<Days> daysList = daysService.findAllDAysByDaysAmountId(daysAmount.getId());
+        List<Days> daysList = daysService.findAllDaysByDaysAmountId(daysAmount.getId());
         if(daysList.size() <= daysAmount.getAmountOfDaysInMonth()){
             daysAmount.setAttendanceList(daysList);
         }
@@ -55,7 +54,6 @@ public class DaysAmountController {
 
         Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
         daysAmountService.addDaysAmount(daysAmount);
-        daysAmountService.insertContractDetailsId(contractDetailsId);
 
         if("SuperAdmin".equals(inspector.getRole())){
             return "redirect:/superAdmin/superAdminHome";
