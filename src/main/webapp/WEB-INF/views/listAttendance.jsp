@@ -269,7 +269,7 @@
                                             {
                                                 <c:if test="${dayAmount.attendanceList != null}">
                                                     <c:forEach items="${dayAmount.attendanceList}" var="day">
-                                                        ${day.monthDay}, ${day.id},
+                                                        ${day.monthDay},
                                                     </c:forEach>
                                                 </c:if>
                                             }<br>
