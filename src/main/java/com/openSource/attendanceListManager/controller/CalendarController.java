@@ -23,7 +23,6 @@ import java.util.Map;
 public class CalendarController {
 
     private final CalendarService calendarService;
-    private final ContractDetailService contractDetailService;
     private final ContractService contractService;
 
     @GetMapping("/minusMonth")

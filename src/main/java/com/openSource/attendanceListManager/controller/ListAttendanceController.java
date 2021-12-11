@@ -39,7 +39,7 @@ public class ListAttendanceController {
 
         model.addAttribute("dayAmountId", dayAmountId);
         model.addAttribute("daysAmount", daysAmount);
-        model.addAttribute("monthList", calendarService.getCalendarList(monthValue, year));
+        model.addAttribute("monthList", calendarService.getCalendarList(monthValue - 1, year));
         model.addAttribute("currentDate", date);
         model.addAttribute("year", year);
         model.addAttribute("monthValue", monthValue);
