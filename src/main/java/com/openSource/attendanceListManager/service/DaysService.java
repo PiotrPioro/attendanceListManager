@@ -22,4 +22,9 @@ public class DaysService {
     public List<Days> findAllDaysByDaysAmountId(int daysAmountId){
         return daysRepository.findAllByDaysAmountId(daysAmountId);
     }
+
+    @Transactional
+    public void deleteDay(Integer id){
+        daysRepository.deleteById(id);
+    }
 }

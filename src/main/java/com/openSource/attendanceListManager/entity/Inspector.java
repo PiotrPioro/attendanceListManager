@@ -38,7 +38,7 @@ public class Inspector {
     @NotBlank
     private String password;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private List<Contract> contractList = new ArrayList<>();
 
     private String role;

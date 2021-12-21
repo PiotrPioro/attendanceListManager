@@ -1,5 +1,6 @@
 package com.openSource.attendanceListManager.service;
 
+import com.openSource.attendanceListManager.entity.Days;
 import com.openSource.attendanceListManager.entity.DaysAmount;
 import com.openSource.attendanceListManager.repository.DaysAmountRepository;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.List;
 public class DaysAmountService {
 
     private final DaysAmountRepository daysAmountRepository;
+    private final DaysService daysService;
 
     @Transactional
     public void addDaysAmount(DaysAmount daysAmount){
@@ -31,6 +33,10 @@ public class DaysAmountService {
 
     @Transactional
     public void deleteDaysAmount(Integer daysAmountId){
+        DaysAmount daysAmount = findDaysAmountById(daysAmountId);
+        for(Days d : daysAmount.getAttendanceList()){
+            daysService.deleteDay(d.getId());
+        }
         daysAmountRepository.deleteById(daysAmountId);
     }
 

@@ -3,6 +3,8 @@ package com.openSource.attendanceListManager.controller;
 import com.openSource.attendanceListManager.entity.Contract;
 import com.openSource.attendanceListManager.entity.ContractDetails;
 import com.openSource.attendanceListManager.entity.Inspector;
+import com.openSource.attendanceListManager.entity.MonthsName;
+import com.openSource.attendanceListManager.repository.MonthNameRepository;
 import com.openSource.attendanceListManager.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ public class ContractAdminController {
     private final InspectorService inspectorService;
     private final CalendarService calendarService;
     private final ContractService contractService;
+    private final MonthNameRepository monthNameRepository;
 
     @GetMapping("/contractAdminHome")
     public String contractAdminHomeView(HttpSession session, Model model){
@@ -35,9 +38,7 @@ public class ContractAdminController {
         }
 
         LocalDate date = LocalDate.now();
-        //nazwy miesięcy
-        String month = calendarService.nameOfMonth(date.getMonthValue());
-        String month2 = calendarService.monthName(date.getMonthValue());
+        MonthsName month = monthNameRepository.findMonthNameById(date.getMonthValue());
 
         model.addAttribute("inspectorMap", inspectorWithDetails);
         model.addAttribute("inspector", inspector);
@@ -47,7 +48,7 @@ public class ContractAdminController {
         model.addAttribute("year", date.getYear());
         model.addAttribute("monthValue", date.getMonthValue());
         model.addAttribute("month", month);
-        model.addAttribute("month2", month2);
+
         return "contractAdminHome";
     }
 

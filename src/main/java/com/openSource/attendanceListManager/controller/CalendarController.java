@@ -3,8 +3,9 @@ package com.openSource.attendanceListManager.controller;
 import com.openSource.attendanceListManager.entity.Contract;
 import com.openSource.attendanceListManager.entity.ContractDetails;
 import com.openSource.attendanceListManager.entity.Inspector;
+import com.openSource.attendanceListManager.entity.MonthsName;
+import com.openSource.attendanceListManager.repository.MonthNameRepository;
 import com.openSource.attendanceListManager.service.CalendarService;
-import com.openSource.attendanceListManager.service.ContractDetailService;
 import com.openSource.attendanceListManager.service.ContractService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ public class CalendarController {
 
     private final CalendarService calendarService;
     private final ContractService contractService;
+    private final MonthNameRepository monthNameRepository;
 
     @GetMapping("/minusMonth")
     public String minusMonth(Model model, @RequestParam(name = "monthValue") int monthValue, @RequestParam(name = "year") int year, HttpSession session){
@@ -44,8 +46,7 @@ public class CalendarController {
         }
 
         LocalDate date = LocalDate.now();
-        String month = calendarService.nameOfMonth(monthValue);
-        String month2 = calendarService.monthName(monthValue);
+        MonthsName month = monthNameRepository.findMonthNameById(monthValue);
 
         model.addAttribute("inspectorMap", inspectorWithDetails);
         model.addAttribute("inspector", inspector);
@@ -53,8 +54,8 @@ public class CalendarController {
         model.addAttribute("monthList", calendarService.getCalendarList(monthValue - 1, year));
         model.addAttribute("month", month);
         model.addAttribute("monthValue", monthValue);
-        model.addAttribute("month2", month2);
         model.addAttribute("year", year);
+
         return "changeMonth";
     }
 
@@ -77,8 +78,7 @@ public class CalendarController {
         }
 
         LocalDate date = LocalDate.now();
-        String month = calendarService.nameOfMonth(monthValue);
-        String month2 = calendarService.monthName(monthValue);
+        MonthsName month = monthNameRepository.findMonthNameById(monthValue);
 
         model.addAttribute("inspectorMap", inspectorWithDetails);
         model.addAttribute("inspector", inspector);
@@ -86,8 +86,8 @@ public class CalendarController {
         model.addAttribute("monthList", calendarService.getCalendarList(monthValue - 1, year));
         model.addAttribute("month", month);
         model.addAttribute("monthValue", monthValue);
-        model.addAttribute("month2", month2);
         model.addAttribute("year", year);
+
         return "changeMonth";
     }
 
@@ -105,8 +105,7 @@ public class CalendarController {
         Map<Contract, ContractDetails> contractDetailsMap = contractService.contractMap(inspector.getId());
 
         LocalDate date = LocalDate.now();
-        String month = calendarService.nameOfMonth(monthValue);
-        String month2 = calendarService.monthName(monthValue);
+        MonthsName month = monthNameRepository.findMonthNameById(monthValue);
 
         model.addAttribute("contractMap", contractDetailsMap);
         model.addAttribute("inspector", inspector);
@@ -114,8 +113,8 @@ public class CalendarController {
         model.addAttribute("monthList", calendarService.getCalendarList(monthValue - 1, year));
         model.addAttribute("month", month);
         model.addAttribute("monthValue", monthValue);
-        model.addAttribute("month2", month2);
         model.addAttribute("year", year);
+
         return "changeInspectorMonth";
     }
 
@@ -133,8 +132,7 @@ public class CalendarController {
         Map<Contract, ContractDetails> contractDetailsMap = contractService.contractMap(inspector.getId());
 
         LocalDate date = LocalDate.now();
-        String month = calendarService.nameOfMonth(monthValue);
-        String month2 = calendarService.monthName(monthValue);
+        MonthsName month = monthNameRepository.findMonthNameById(monthValue);
 
         model.addAttribute("contractMap", contractDetailsMap);
         model.addAttribute("inspector", inspector);
@@ -142,8 +140,8 @@ public class CalendarController {
         model.addAttribute("monthList", calendarService.getCalendarList(monthValue - 1, year));
         model.addAttribute("month", month);
         model.addAttribute("monthValue", monthValue);
-        model.addAttribute("month2", month2);
         model.addAttribute("year", year);
+
         return "changeInspectorMonth";
     }
 
@@ -167,8 +165,7 @@ public class CalendarController {
         }
 
         LocalDate date = LocalDate.now();
-        String month = calendarService.nameOfMonth(monthValue);
-        String month2 = calendarService.monthName(monthValue);
+        MonthsName month = monthNameRepository.findMonthNameById(monthValue);
 
         model.addAttribute("inspectorMap", inspectorWithDetails);
         model.addAttribute("inspector", inspector);
@@ -176,8 +173,8 @@ public class CalendarController {
         model.addAttribute("monthList", calendarService.getCalendarList(monthValue - 1, year));
         model.addAttribute("month", month);
         model.addAttribute("monthValue", monthValue);
-        model.addAttribute("month2", month2);
         model.addAttribute("year", year);
+
         return "changeAdminMonth";
     }
 
@@ -201,8 +198,7 @@ public class CalendarController {
         }
 
         LocalDate date = LocalDate.now();
-        String month = calendarService.nameOfMonth(monthValue);
-        String month2 = calendarService.monthName(monthValue);
+        MonthsName month = monthNameRepository.findMonthNameById(monthValue);
 
         model.addAttribute("inspectorMap", inspectorWithDetails);
         model.addAttribute("inspector", inspector);
@@ -210,8 +206,8 @@ public class CalendarController {
         model.addAttribute("monthList", calendarService.getCalendarList(monthValue - 1, year));
         model.addAttribute("month", month);
         model.addAttribute("monthValue", monthValue);
-        model.addAttribute("month2", month2);
         model.addAttribute("year", year);
+
         return "changeAdminMonth";
     }
 }

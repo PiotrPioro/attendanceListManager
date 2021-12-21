@@ -51,6 +51,14 @@ public class ContractService {
 
     @Transactional
     public void deleteContract(Long id){
+        Contract contract = findContractById(id);
+        for(ContractDetails cd : contract.getContractDetails()){
+            contractDetailsService.deleteContractDetails(cd.getId());
+        }
+
+        for(Inspector inspector : contract.getInspectorList()){
+            inspector.getContractList().remove(contract);
+        }
         contractRepository.deleteById(id);
     }
 

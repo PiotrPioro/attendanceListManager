@@ -74,21 +74,21 @@ public class ContractController {
     public String editContractView(@RequestParam(name = "id") Long contractId, Model model){
         Contract contract = contractService.findContractById(contractId);
         model.addAttribute("contract", contract);
-        return "editContract";
+         return "editContract";
     }
 
     @PostMapping("/editContract")
     public String editContract(@ModelAttribute("contract") @Valid Contract contract, BindingResult result,
-                               HttpSession session){
+                               HttpSession session, @RequestParam(name = "id") Long contractId){
         if(result.hasErrors()){
             return "editContract";
         }
         Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
         contractService.addContract(contract);
-        for(Inspector i : contract.getInspectorList()){
+        /*for(Inspector i : contract1.getInspectorList()){
             i.getContractList().add(contract);
             inspectorService.addInspector(i);
-        }
+        }*/
         if("SuperAdmin".equals(inspector.getRole())){
             return "redirect:/contract/contractList";
         }

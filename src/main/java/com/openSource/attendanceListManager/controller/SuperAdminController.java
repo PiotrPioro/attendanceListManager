@@ -3,6 +3,8 @@ package com.openSource.attendanceListManager.controller;
 import com.openSource.attendanceListManager.entity.Contract;
 import com.openSource.attendanceListManager.entity.ContractDetails;
 import com.openSource.attendanceListManager.entity.Inspector;
+import com.openSource.attendanceListManager.entity.MonthsName;
+import com.openSource.attendanceListManager.repository.MonthNameRepository;
 import com.openSource.attendanceListManager.service.CalendarService;
 import com.openSource.attendanceListManager.service.ContractService;
 import lombok.AllArgsConstructor;
@@ -25,6 +27,7 @@ public class SuperAdminController {
 
     private final ContractService contractService;
     private final CalendarService calendarService;
+    private final MonthNameRepository monthNameRepository;
 
     @GetMapping("/superAdminHome")
     public String superAdminHomeView(HttpSession session, Model model){
@@ -39,9 +42,7 @@ public class SuperAdminController {
         }
 
         LocalDate date = LocalDate.now();
-        //nazwy miesięcy
-        String month = calendarService.nameOfMonth(date.getMonthValue());
-        String month2 = calendarService.monthName(date.getMonthValue());
+        MonthsName month = monthNameRepository.findMonthNameById(date.getMonthValue());
 
         model.addAttribute("inspectorMap", inspectorWithDetails);
         model.addAttribute("inspector", inspector);
@@ -51,7 +52,6 @@ public class SuperAdminController {
         model.addAttribute("year", date.getYear());
         model.addAttribute("monthValue", date.getMonthValue());
         model.addAttribute("month", month);
-        model.addAttribute("month2", month2);
 
         return "superAdminHome";
     }

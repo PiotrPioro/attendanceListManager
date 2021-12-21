@@ -3,6 +3,8 @@ package com.openSource.attendanceListManager.controller;
 import com.openSource.attendanceListManager.entity.Contract;
 import com.openSource.attendanceListManager.entity.ContractDetails;
 import com.openSource.attendanceListManager.entity.Inspector;
+import com.openSource.attendanceListManager.entity.MonthsName;
+import com.openSource.attendanceListManager.repository.MonthNameRepository;
 import com.openSource.attendanceListManager.service.CalendarService;
 import com.openSource.attendanceListManager.service.ContractService;
 import com.openSource.attendanceListManager.service.InspectorService;
@@ -26,6 +28,7 @@ public class InspectorController {
     private final InspectorService inspectorService;
     private final ContractService contractService;
     private final CalendarService calendarService;
+    private final MonthNameRepository monthNameRepository;
 
     @GetMapping("/profile")
     public String InspectorProfileView(HttpSession session, Model model){
@@ -34,9 +37,7 @@ public class InspectorController {
         Map<Contract, ContractDetails> contractDetailsMap = contractService.contractMap(inspector.getId());
 
         LocalDate date = LocalDate.now();
-        //nazwy miesięcy
-        String month = calendarService.nameOfMonth(date.getMonthValue());
-        String month2 = calendarService.monthName(date.getMonthValue());
+        MonthsName month = monthNameRepository.findMonthNameById(date.getMonthValue());
 
         model.addAttribute("monthList", calendarService.getCalendarList(calendarService.currentMonth(), date.getYear()));
         model.addAttribute("currentDay", date.getDayOfMonth());
@@ -44,7 +45,6 @@ public class InspectorController {
         model.addAttribute("year", date.getYear());
         model.addAttribute("monthValue", date.getMonthValue());
         model.addAttribute("month", month);
-        model.addAttribute("month2", month2);
         model.addAttribute("contractMap", contractDetailsMap);
         model.addAttribute("inspector", inspector);
 

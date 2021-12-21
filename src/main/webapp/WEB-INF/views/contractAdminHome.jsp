@@ -97,6 +97,20 @@
         </li>
 
         <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Twoje kontrakty
+        </div>
+
+        <!-- Nav Item - attendance -->
+        <li class="nav-item">
+            <a class="nav-link" href="/inspector/profile">
+                <span>Lista kontraktów na których pracujesz</span></a>
+        </li>
+
+        <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
@@ -173,7 +187,7 @@
 
                     <table cellspacing="0" cellpadding="0" border="1" style="width: 100%;">
 
-                        <h5><a href="/calendar/minusMonth?monthValue=${monthValue}&year=${year}"><-   </a> ${month} ${year}<a href="/calendar/plusMonth?monthValue=${monthValue}&year=${year}">    -></a></h5>
+                        <h5><a href="/calendar/minusMonth?monthValue=${monthValue}&year=${year}"><-   </a> ${month.name} ${year}<a href="/calendar/plusMonth?monthValue=${monthValue}&year=${year}">    -></a></h5>
                         <thead>
                         <tr>
                             <th>Poniedziałek</th>
@@ -225,8 +239,8 @@
                             <th>Email</th>
                             <th>Stanowisko</th>
                             <th>Typ listy obecności</th>
-                            <th>Ilość dni w ${month2}</th>
-                            <th>W ${month2} zostało dni</th>
+                            <th>Ilość dni ${month.nameVariation}</th>
+                            <th>${month.nameVariation} zostało dni</th>
                             <th>Opcje szczegółów kontraku</th>
                             <th>Opcje ilości dni w danym miesiącu</th>
                             <th>Uzupełnij listę obecności</th>
@@ -265,18 +279,24 @@
                                     </c:forEach>
                                 </td>
                                 <td>
-                                    <a href="/contractDetails/addContractDetails?contractId=${contract.key.id}&insp=${con.key.id}" class="btn btn-danger rounded-0 text-light m-1">Dodaj szczegóły kontraktu</a>
-                                    <a href="/contractDetails/editContractDetails?contractId=${con.value.id}" class="btn btn-danger rounded-0 text-light m-1">Edytuj szczegóły kontraktu</a>
-                                    <a href="/contractDetails/deleteContractDetailsView/${con.value.id}" class="btn btn-danger rounded-0 text-light m-1">Usuń szczegóły kontraktu</a>
+                                    <c:choose>
+                                        <c:when test="${con.value == null}">
+                                            <a href="/contractDetails/addContractDetails?contractId=${contract.key.id}&insp=${con.key.id}" class="btn btn-danger rounded-0 text-light m-1">Dodaj szczegóły kontraktu</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="/contractDetails/editContractDetails?contractId=${con.value.id}" class="btn btn-danger rounded-0 text-light m-1">Edytuj szczegóły kontraktu</a>
+                                            <a href="/contractDetails/deleteContractDetailsView/${con.value.id}" class="btn btn-danger rounded-0 text-light m-1">Usuń szczegóły kontraktu</a>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </td>
                                 <td>
                                     <c:if test="${con.value.id != null}">
-                                        <a href="/daysAmount/addDaysAmount?month=${monthValue}&contractDetailsId=${con.value.id}&year=${year}" class="btn btn-danger rounded-0 text-light m-1">Dodaj ilość dniówek w ${month2}</a>
+                                        <a href="/daysAmount/addDaysAmount?month=${monthValue}&contractDetailsId=${con.value.id}&year=${year}" class="btn btn-danger rounded-0 text-light m-1">Dodaj ilość dniówek ${month.nameVariation}</a>
                                     </c:if>
                                     <c:forEach var="daysAmountList" items="${con.value.listDaysAmount}">
                                         <c:if test="${daysAmountList.monthNumber == monthValue && daysAmountList.year == year}">
-                                            <a href="/daysAmount/editDaysAmount?dayAmountId=${daysAmountList.id}&contractDetailsId=${con.value.id}&month=${monthValue}&year=${year}" class="btn btn-danger rounded-0 text-light m-1">Edytuj ilość dniówek w ${month2}</a>
-                                            <a href="/daysAmount/deleteDaysAmountView?dayAmountId=${daysAmountList.id}&month2=${month2}" class="btn btn-danger rounded-0 text-light m-1">Usuń ilość dniówek w ${month2}</a>
+                                            <a href="/daysAmount/editDaysAmount?dayAmountId=${daysAmountList.id}&contractDetailsId=${con.value.id}&month=${monthValue}&year=${year}" class="btn btn-danger rounded-0 text-light m-1">Edytuj ilość dniówek ${month.nameVariation}</a>
+                                            <a href="/daysAmount/deleteDaysAmountView?dayAmountId=${daysAmountList.id}&month2=${month.nameVariation}" class="btn btn-danger rounded-0 text-light m-1">Usuń ilość dniówek ${month.nameVariation}</a>
                                         </c:if>
                                     </c:forEach>
                                 </td>

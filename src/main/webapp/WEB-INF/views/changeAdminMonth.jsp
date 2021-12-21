@@ -195,7 +195,7 @@
 
                     <table cellspacing="0" cellpadding="0" border="1" style="width: 100%;">
 
-                        <h5><a href="/calendar/minusMonth?monthValue=${monthValue}&year=${year}"><-   </a> ${month} ${year}<a href="/calendar/plusMonth?monthValue=${monthValue}&year=${year}">    -></a></h5>
+                        <h5><a href="/calendar/minusMonth?monthValue=${monthValue}&year=${year}"><-   </a> ${month.name} ${year}<a href="/calendar/plusMonth?monthValue=${monthValue}&year=${year}">    -></a></h5>
                         <thead>
                         <tr>
                             <th>Poniedziałek</th>
@@ -247,8 +247,8 @@
                                 <th>Email</th>
                                 <th>Stanowisko</th>
                                 <th>Typ listy obecności</th>
-                                <th>Ilość dni w ${month2}</th>
-                                <th>W ${month2} zostało dni</th>
+                                <th>Ilość dni ${month.nameVariation}</th>
+                                <th>${month.nameVariation} zostało dni</th>
                                 <th>Opcje szczegółów kontraku</th>
                                 <th>Opcje ilości dni w danym miesiącu</th>
                                 <th>Uzupełnij listę obecności</th>
@@ -293,12 +293,12 @@
                                     </td>
                                     <td>
                                         <c:if test="${con.value.id != null}">
-                                            <a href="/daysAmount/addDaysAmount?month=${monthValue}&contractDetailsId=${con.value.id}&year=${year}" class="btn btn-danger rounded-0 text-light m-1">Dodaj ilość dniówek w ${month2}</a>
+                                            <a href="/daysAmount/addDaysAmount?month=${monthValue}&contractDetailsId=${con.value.id}&year=${year}" class="btn btn-danger rounded-0 text-light m-1">Dodaj ilość dniówek ${month.nameVariation}</a>
                                         </c:if>
                                         <c:forEach var="daysAmountList" items="${con.value.listDaysAmount}">
                                             <c:if test="${daysAmountList.monthNumber == monthValue && daysAmountList.year == year}">
-                                                <a href="/daysAmount/editDaysAmount?dayAmountId=${daysAmountList.id}&contractDetailsId=${con.value.id}&month=${monthValue}&year=${year}" class="btn btn-danger rounded-0 text-light m-1">Edytuj ilość dniówek w ${month2}</a>
-                                                <a href="/daysAmount/deleteDaysAmountView?dayAmountId=${daysAmountList.id}&month2=${month2}" class="btn btn-danger rounded-0 text-light m-1">Usuń ilość dniówek w ${month2}</a>
+                                                <a href="/daysAmount/editDaysAmount?dayAmountId=${daysAmountList.id}&contractDetailsId=${con.value.id}&month=${monthValue}&year=${year}" class="btn btn-danger rounded-0 text-light m-1">Edytuj ilość dniówek ${month.nameVariation}</a>
+                                                <a href="/daysAmount/deleteDaysAmountView?dayAmountId=${daysAmountList.id}&month2=${month.nameVariation}" class="btn btn-danger rounded-0 text-light m-1">Usuń ilość dniówek ${month.nameVariation}</a>
                                             </c:if>
                                         </c:forEach>
                                     </td>

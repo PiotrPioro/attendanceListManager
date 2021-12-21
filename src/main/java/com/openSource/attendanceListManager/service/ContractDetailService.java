@@ -1,6 +1,8 @@
 package com.openSource.attendanceListManager.service;
 
 import com.openSource.attendanceListManager.entity.ContractDetails;
+import com.openSource.attendanceListManager.entity.Days;
+import com.openSource.attendanceListManager.entity.DaysAmount;
 import com.openSource.attendanceListManager.repository.ContractDetailsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import java.util.List;
 public class ContractDetailService {
 
     private final ContractDetailsRepository contractDetailsRepository;
+    private final DaysAmountService daysAmountService;
 
     @Transactional
     public void addContractDetails(ContractDetails contractDetails){
@@ -25,6 +28,10 @@ public class ContractDetailService {
 
     @Transactional
     public void deleteContractDetails(Long id){
+        ContractDetails contractDetails = findContractDetailsById(id);
+        for(DaysAmount da : contractDetails.getListDaysAmount()){
+            daysAmountService.deleteDaysAmount(da.getId());
+        }
         contractDetailsRepository.deleteById(id);
     }
 

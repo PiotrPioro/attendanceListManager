@@ -173,7 +173,7 @@
                 <div class="row">
                     <table cellspacing="0" cellpadding="0" border="1" style="width: 100%;">
 
-                        <h5><a href="/calendar/minusInspectorMonth?monthValue=${monthValue}&year=${year}"><-   </a> ${month} ${year}<a href="/calendar/plusInspectorMonth?monthValue=${monthValue}&year=${year}">    -></a></h5>
+                        <h5><a href="/calendar/minusInspectorMonth?monthValue=${monthValue}&year=${year}"><-   </a> ${month.name} ${year}<a href="/calendar/plusInspectorMonth?monthValue=${monthValue}&year=${year}">    -></a></h5>
                         <thead>
                         <tr>
                             <th>Poniedziałek</th>
@@ -221,8 +221,8 @@
                                 <th>Nazwa</th>
                                 <th>Stanowisko</th>
                                 <th>Typ listy obecności</th>
-                                <th>Ilość dni w ${month2}</th>
-                                <th>W ${month2} zostało dni</th>
+                                <th>Ilość dni ${month.nameVariation}</th>
+                                <th>${month.nameVariation} zostało dni</th>
                                 <th>Edytuj listę obecności</th>
                             </tr>
                         </thead>

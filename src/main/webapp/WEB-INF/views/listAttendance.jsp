@@ -261,11 +261,14 @@
                     <p>Lista obecności inspektora ${insp.fullName}:<br>
 
                     <c:forEach items="${insp.contractList}" var="contractList">
-                        ${contractList.name}:<br>
+                        Nazwa kontraktu: ${contractList.name}:<br>
                             <c:forEach items="${contractList.contractDetails}" var="cd">
                                 <c:if test="${cd. inspectorId == insp.id}">
                                     <c:forEach items="${cd.listDaysAmount}" var="dayAmount">
                                         <c:if test="${dayAmount.monthNumber == monthValue && dayAmount.year == year}">
+                                            Ilość dni na kontrakcie: ${dayAmount.amountOfDaysInMonth}<br>
+                                            Ilość dni przepracowanych na kontrakcie: ${dayAmount.attendanceList.size()}<br>
+                                            Dni w których inspektor był na danym kontrakcie:<br>
                                             {
                                                 <c:if test="${dayAmount.attendanceList != null}">
                                                     <c:forEach items="${dayAmount.attendanceList}" var="day">
