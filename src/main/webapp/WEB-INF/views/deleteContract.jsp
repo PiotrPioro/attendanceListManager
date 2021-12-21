@@ -41,7 +41,14 @@
                         <p class="h3 mb-0 text-gray-800">
                             Czy na pewno chcesz usunąć ten kontrakt?<br>
                             <a href="/contract/deleteContract/${contractId}">Tak</a>
-                            <a href="/contract/contractList">Nie</a>
+                            <c:choose>
+                                <c:when test="${inspector.role == role}">
+                                    <a href="/contract/contractList">Nie</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="/contract/inspectorContractList">Nie</a>
+                                </c:otherwise>
+                            </c:choose>
                         </p>
                     </div>
                 </div>

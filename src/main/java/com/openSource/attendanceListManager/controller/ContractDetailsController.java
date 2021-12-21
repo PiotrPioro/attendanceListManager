@@ -107,8 +107,12 @@ public class ContractDetailsController {
     }
 
     @GetMapping("/deleteContractDetailsView/{id}")
-    public String deleteContractDetailsView(@PathVariable("id") Long id, Model model){
+    public String deleteContractDetailsView(@PathVariable("id") Long id, Model model, HttpSession session){
+        Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
+        String role = "SuperAdmin";
         model.addAttribute("contractDetailsId", id);
+        model.addAttribute("inspector", inspector);
+        model.addAttribute("role", role);
         return "deleteContractDetails";
     }
 

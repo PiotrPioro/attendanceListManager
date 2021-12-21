@@ -52,7 +52,11 @@ public class ContractController {
     }
 
     @GetMapping("/deleteContractView/{id}/{name}")
-    public String deleteContractView(@PathVariable("id") Long id, @PathVariable("name") String name, Model model){
+    public String deleteContractView(@PathVariable("id") Long id, @PathVariable("name") String name, Model model, HttpSession session){
+        Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
+        String role = "SuperAdmin";
+        model.addAttribute("inspector", inspector);
+        model.addAttribute("role", role);
         model.addAttribute("contractId", id);
         model.addAttribute("contractName",name);
         return "deleteContract";

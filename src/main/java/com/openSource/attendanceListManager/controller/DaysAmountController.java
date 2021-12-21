@@ -120,8 +120,11 @@ public class DaysAmountController {
 
     @GetMapping("/deleteDaysAmountView")
     public String deleteDaysAmountView(@RequestParam(name = "dayAmountId") Integer dayAmountId, Model model,
-                                            @RequestParam(name = "month2") String month2){
-
+                                            @RequestParam(name = "month2") String month2, HttpSession session){
+        Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
+        String role = "SuperAdmin";
+        model.addAttribute("inspector", inspector);
+        model.addAttribute("role", role);
         model.addAttribute("dayAmountId", dayAmountId);
         model.addAttribute("month2", month2);
 

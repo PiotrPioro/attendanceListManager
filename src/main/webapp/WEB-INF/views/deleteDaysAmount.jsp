@@ -41,7 +41,14 @@
                         <p class="h3 mb-0 text-gray-800">
                             Czy na pewno chcesz usunąć ilość dniówek w ${month2}?<br>
                             <a href="/daysAmount/deleteDaysAmount?dayAmountId=${dayAmountId}">Tak</a>
-                            <a href="/contractAdmin/contractAdminHome">Nie</a>
+                            <c:choose>
+                                <c:when test="${inspector.role == role}">
+                                    <a href="/superAdmin/superAdminHome">Nie</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="/contractAdmin/contractAdminHome">Nie</a>
+                                </c:otherwise>
+                            </c:choose>
                         </p>
                     </div>
                 </div>
