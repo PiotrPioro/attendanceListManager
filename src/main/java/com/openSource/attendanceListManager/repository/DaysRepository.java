@@ -11,4 +11,6 @@ public interface DaysRepository extends JpaRepository<Days, Integer> {
 
     @Query(value = "select * from days where days_amount_id=?1 order by month_day asc", nativeQuery = true)
     List<Days> findAllByDaysAmountId(int daysAmountId);
+
+    void deleteById(Integer id);
 }

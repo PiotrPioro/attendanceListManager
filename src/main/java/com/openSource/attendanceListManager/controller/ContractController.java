@@ -1,7 +1,9 @@
 package com.openSource.attendanceListManager.controller;
 
 import com.openSource.attendanceListManager.entity.Contract;
+import com.openSource.attendanceListManager.entity.ContractDetails;
 import com.openSource.attendanceListManager.entity.Inspector;
+import com.openSource.attendanceListManager.service.ContractDetailService;
 import com.openSource.attendanceListManager.service.ContractService;
 import com.openSource.attendanceListManager.service.InspectorService;
 import lombok.AllArgsConstructor;
@@ -20,6 +22,7 @@ public class ContractController {
 
     private final ContractService contractService;
     private final InspectorService inspectorService;
+    private final ContractDetailService contractDetailService;
 
     @GetMapping("/addContract")
     public String addContractView(Model model){
@@ -77,22 +80,22 @@ public class ContractController {
     @GetMapping("/editContract")
     public String editContractView(@RequestParam(name = "id") Long contractId, Model model){
         Contract contract = contractService.findContractById(contractId);
+        List<ContractDetails> contractDetailsList = contract.getContractDetails();
         model.addAttribute("contract", contract);
+        model.addAttribute("contractDetailsList", contractDetailsList);
          return "editContract";
     }
 
     @PostMapping("/editContract")
     public String editContract(@ModelAttribute("contract") @Valid Contract contract, BindingResult result,
-                               HttpSession session, @RequestParam(name = "id") Long contractId){
+                               HttpSession session){
         if(result.hasErrors()){
             return "editContract";
         }
         Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
+        //contractService.editContract(contract);
         contractService.addContract(contract);
-        /*for(Inspector i : contract1.getInspectorList()){
-            i.getContractList().add(contract);
-            inspectorService.addInspector(i);
-        }*/
+
         if("SuperAdmin".equals(inspector.getRole())){
             return "redirect:/contract/contractList";
         }

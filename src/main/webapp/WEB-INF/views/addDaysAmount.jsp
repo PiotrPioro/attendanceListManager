@@ -50,7 +50,7 @@
 
                             <form:hidden path="year" value="${year}"/><br>
 
-                            Liczba dni na kontrakcie:<form:input path="amountOfDaysInMonth" type="Number" min="1" max="31"/><br>
+                            Liczba dni na kontrakcie:<form:input path="amountOfDaysInMonth" type="Number" min="0" max="31"/><br>
 
                             <input type="submit" value="Zapisz"><br>
                         </form:form>

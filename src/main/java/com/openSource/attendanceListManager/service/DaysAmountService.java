@@ -1,5 +1,6 @@
 package com.openSource.attendanceListManager.service;
 
+import com.openSource.attendanceListManager.entity.ContractDetails;
 import com.openSource.attendanceListManager.entity.Days;
 import com.openSource.attendanceListManager.entity.DaysAmount;
 import com.openSource.attendanceListManager.repository.DaysAmountRepository;
@@ -43,5 +44,14 @@ public class DaysAmountService {
     @Transactional
     public List<DaysAmount> daysAmountList(Long contractDetailsId){
         return daysAmountRepository.findAllDaysAmountByContractDetailsId(contractDetailsId);
+    }
+
+    @Transactional
+    public void editDaysAmount(ContractDetails contractDetails){
+        List<DaysAmount> daysAmountList = daysAmountList(contractDetails.getId());
+        for(DaysAmount daysAmount : daysAmountList){
+            daysService.editDaysAmountList(daysAmount);
+        }
+        contractDetails.setListDaysAmount(daysAmountList);
     }
 }

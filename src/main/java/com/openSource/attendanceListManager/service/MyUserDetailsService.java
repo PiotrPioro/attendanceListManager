@@ -23,7 +23,6 @@ public class MyUserDetailsService implements UserDetailsService {
         if(inspector == null){
             throw new UsernameNotFoundException(email);
         }
-
         return new User(inspector.getEmail(), inspector.getPassword(), Collections.emptyList());
     }
 }

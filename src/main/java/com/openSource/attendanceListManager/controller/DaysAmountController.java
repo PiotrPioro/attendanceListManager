@@ -49,6 +49,9 @@ public class DaysAmountController {
             daysAmount.setAttendanceList(daysList);
         }
         else {
+            for(Days d : daysList){
+                daysService.deleteDay(d.getId());
+            }
             daysAmount.setAttendanceList(null);
         }
 

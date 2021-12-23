@@ -42,6 +42,8 @@
 
                             <form:hidden path="id"/>
 
+                            <input type="hidden" name="contractDetailsList" value="${contractDetailsList}">
+
                             Nazwa kontraktu:<form:input path="name"/><br>
                             <form:errors path="name"/><br>
 
@@ -54,8 +56,9 @@
                             Wybierz administratora kontraktu:<form:select path="contractAdministrator" itemValue="id" itemLabel="fullName" items="${inspectors}" multiple="true"/><br>
                             <form:errors path="contractAdministrator"/><br>
 
-                            Wybierz inspektorów:<form:select path="inspectorList" itemValue="id" itemLabel="fullName" items="${inspectors}" multiple="true"/><br>
-                            <form:errors path="inspectorList"/><br>
+                            <form:hidden path="inspectorList" itemValue="id" items="${inspectors}" multiple="true"/><br>
+
+                            <form:hidden path="contractDetails" itemValue="id" items="${contractDetailsList}" multiple="true"/><br>
 
                             <input type="submit" value="Zapisz"><br>
                         </form:form>
