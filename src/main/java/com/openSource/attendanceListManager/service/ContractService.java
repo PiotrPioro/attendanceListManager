@@ -76,9 +76,4 @@ public class ContractService {
         }
         return inspectorDetailsMap;
     }
-
-    @Transactional
-    public void editContract(Contract contract){
-        List<ContractDetails> contractDetailsList = contract.getContractDetails();
-    }
 }

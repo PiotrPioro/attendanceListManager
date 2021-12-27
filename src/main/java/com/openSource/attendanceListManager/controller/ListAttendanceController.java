@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -37,6 +38,8 @@ public class ListAttendanceController {
         String month = calendarService.nameOfMonth(monthValue);
         String month2 = calendarService.monthName(monthValue);
 
+        Map<Contract, ContractDetails> contractDetailsMap = contractService.contractMap(inspectorId);
+
         model.addAttribute("dayAmountId", dayAmountId);
         model.addAttribute("daysAmount", daysAmount);
         model.addAttribute("monthList", calendarService.getCalendarList(monthValue - 1, year));
@@ -48,6 +51,7 @@ public class ListAttendanceController {
         model.addAttribute("insp", insp);
         model.addAttribute("contractDetails", contractDetails);
         model.addAttribute("contract", contract);
+        model.addAttribute("contractDetailsMap", contractDetailsMap);
 
         return "listAttendance";
     }

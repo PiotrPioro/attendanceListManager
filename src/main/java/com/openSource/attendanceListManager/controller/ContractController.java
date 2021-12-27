@@ -93,7 +93,29 @@ public class ContractController {
             return "editContract";
         }
         Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
-        //contractService.editContract(contract);
+        contractService.addContract(contract);
+
+        if("SuperAdmin".equals(inspector.getRole())){
+            return "redirect:/contract/contractList";
+        }
+        else {
+            return "redirect:/contract/inspectorContractList";
+        }
+    }
+
+    @GetMapping("/addInstructor")
+    public String addInstructorView(@RequestParam("id") Long contractId, Model model){
+
+        Contract contract = contractService.findContractById(contractId);
+        model.addAttribute("contract", contract);
+        return "addInstructor";
+    }
+
+    @PostMapping("/addInstructor")
+    public String addInstructor(@ModelAttribute("contract") @Valid Contract contract, HttpSession session){
+
+        Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
+        contract.setInspectorList(contract.getInspectorList());
         contractService.addContract(contract);
 
         if("SuperAdmin".equals(inspector.getRole())){

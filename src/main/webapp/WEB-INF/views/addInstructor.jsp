@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dodawanie kontraktu</title>
+    <title>Dodawanie Inspektorów</title>
 
     <!-- Custom fonts for this template-->
     <link href="<c:url value="/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet" type="text/css">
@@ -36,24 +36,26 @@
                 <div class="col-lg-7">
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Dodaj kontrakt</h1>
+                            <h1 class="h4 text-gray-900 mb-4">Dodaj Instruktorów</h1>
                         </div>
                         <form:form method="post" modelAttribute="contract">
 
                             <form:hidden path="id"/>
 
-                            Nazwa kontraktu:<form:input path="name"/><br>
-                            <form:errors path="name"/><br>
+                            <input type="hidden" name="contractDetailsList" value="${contractDetailsList}">
 
-                            Rodzaj usługi:<form:input path="typeOfService"/><br>
-                            <form:errors path="typeOfService"/><br>
+                            <form:hidden path="name"/><br>
 
-                            Opis usługi:<form:input path="description"/><br>
-                            <form:errors path="description"/><br>
+                            <form:hidden path="typeOfService"/><br>
 
-                            Wybierz administratora kontraktu:
-                            <form:select path="contractAdministrator" itemValue="id" itemLabel="fullName" items="${inspectors}" multiple="true"/><br>
-                            <form:errors path="contractAdministrator"/><br>
+                            <form:hidden path="description"/><br>
+
+                            <form:hidden path="contractAdministrator" itemValue="id" itemLabel="fullName" items="${inspectors}" multiple="true"/><br>
+
+                            <form:select path="inspectorList" itemValue="id" itemLabel="fullName" items="${inspectors}" multiple="true"/><br>
+                            <form:errors path="inspectorList"/><br>
+
+                            <form:hidden path="contractDetails" itemValue="id" items="${contractDetailsList}" multiple="true"/><br>
 
                             <input type="submit" value="Zapisz"><br>
                         </form:form>
