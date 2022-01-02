@@ -27,8 +27,10 @@ public class ListAttendanceController {
     @GetMapping("/view")
     public String listAttendanceView(@RequestParam(name = "insp") Long inspectorId, @RequestParam(name = "conDet") Long conDetId, Model model,
                                      @RequestParam(name = "con") Long conId, @RequestParam(name = "dayAmountId") int dayAmountId,
-                                     @RequestParam(name = "monthValue") int monthValue, @RequestParam(name = "year") int year){
+                                     @RequestParam(name = "monthValue") int monthValue, @RequestParam(name = "year") int year,
+                                     HttpSession session){
 
+        Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
         Inspector insp = inspectorService.findById(inspectorId);
         ContractDetails contractDetails = contractDetailService.findContractDetailsById(conDetId);
         Contract contract = contractService.findContractById(conId);
@@ -48,6 +50,7 @@ public class ListAttendanceController {
         model.addAttribute("monthValue", monthValue);
         model.addAttribute("month", month);
         model.addAttribute("month2", month2);
+        model.addAttribute("inspector", inspector);
         model.addAttribute("insp", insp);
         model.addAttribute("contractDetails", contractDetails);
         model.addAttribute("contract", contract);

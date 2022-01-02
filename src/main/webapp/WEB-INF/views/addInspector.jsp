@@ -52,7 +52,7 @@
 
                             <form:hidden path="contractAdministrator" itemValue="id" itemLabel="fullName" items="${inspectors}" multiple="true"/><br>
 
-                            <form:select path="inspectorList" itemValue="id" itemLabel="fullName" items="${inspectors}" multiple="true"/><br>
+                            <form:select path="inspectorList" itemValue="id" itemLabel="fullName" items="${addInspectorList}" multiple="true"/><br>
                             <form:errors path="inspectorList"/><br>
 
                             <form:hidden path="contractDetails" itemValue="id" items="${contractDetailsList}" multiple="true"/><br>

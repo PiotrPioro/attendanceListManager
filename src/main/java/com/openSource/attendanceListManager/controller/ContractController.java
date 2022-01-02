@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -40,9 +41,11 @@ public class ContractController {
     }
 
     @GetMapping("/contractList")
-    public String contractList(Model model){
+    public String contractList(HttpSession session, Model model){
+        Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
         List<Contract> contractList = contractService.findAllContracts();
         model.addAttribute("contracts", contractList);
+        model.addAttribute("inspector", inspector);
         return "contractList";
     }
 
@@ -103,19 +106,52 @@ public class ContractController {
         }
     }
 
-    @GetMapping("/addInstructor")
+    @GetMapping("/addInspector")
     public String addInstructorView(@RequestParam("id") Long contractId, Model model){
 
         Contract contract = contractService.findContractById(contractId);
+        List<Inspector> addInspectorList = contractService.allInspectorExceptAlreadyConnected(contract);
+
         model.addAttribute("contract", contract);
-        return "addInstructor";
+        model.addAttribute("addInspectorList", addInspectorList);
+        return "addInspector";
     }
 
-    @PostMapping("/addInstructor")
+    @PostMapping("/addInspector")
     public String addInstructor(@ModelAttribute("contract") @Valid Contract contract, HttpSession session){
 
         Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
-        contract.setInspectorList(contract.getInspectorList());
+        contractService.addInspectors(contract);
+        contractService.addContract(contract);
+
+        if("SuperAdmin".equals(inspector.getRole())){
+            return "redirect:/contract/contractList";
+        }
+        else {
+            return "redirect:/contract/inspectorContractList";
+        }
+    }
+
+    @GetMapping("/deleteInspector")
+    public String deleteInstructorView(@RequestParam("id") Long contractId, Model model){
+
+        Contract contract = contractService.findContractById(contractId);
+        List<Inspector> contractInspectorList = contract.getInspectorList();
+
+        model.addAttribute("contractInspectorList", contractInspectorList);
+        model.addAttribute("contract", contract);
+        return "deleteInspectorFromContract";
+    }
+
+    @PostMapping("/deleteInspector")
+    public String deleteInstructor(@ModelAttribute("contract") @Valid Contract contract, @RequestParam(name = "inspectorToDelete") String[] inspectorsId, HttpSession session){
+        List<Inspector> inspectorList = new ArrayList<>();
+        for(String s : inspectorsId){
+            inspectorList.add(inspectorService.findById(Long.parseLong(s)));
+        }
+
+        Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
+        contractService.deleteInspectorFromContract(inspectorList, contract);
         contractService.addContract(contract);
 
         if("SuperAdmin".equals(inspector.getRole())){

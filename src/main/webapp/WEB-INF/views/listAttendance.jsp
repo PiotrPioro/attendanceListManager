@@ -258,10 +258,10 @@
                             </tbody>
                     </table><br>
 
-                    <p>Lista obecności inspektora ${insp.fullName}:<br>
+                    <p><b>Lista obecności inspektora ${insp.fullName}:</b><br>
 
                         <c:forEach items="${contractDetailsMap}" var="contractDetailsMap">
-                            Nazwa kontraktu: ${contractDetailsMap.key.name}:<br>
+                            <b>Nazwa kontraktu: ${contractDetailsMap.key.name}</b><br>
                                 <c:forEach items="${contractDetailsMap.value.listDaysAmount}" var="dayAmount">
                                     <c:if test="${dayAmount.monthNumber == monthValue && dayAmount.year == year}">
                                         Ilość dni na kontrakcie: ${dayAmount.amountOfDaysInMonth}<br>

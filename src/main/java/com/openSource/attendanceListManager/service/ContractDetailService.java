@@ -1,7 +1,7 @@
 package com.openSource.attendanceListManager.service;
 
+import com.openSource.attendanceListManager.entity.Contract;
 import com.openSource.attendanceListManager.entity.ContractDetails;
-import com.openSource.attendanceListManager.entity.Days;
 import com.openSource.attendanceListManager.entity.DaysAmount;
 import com.openSource.attendanceListManager.repository.ContractDetailsRepository;
 import lombok.AllArgsConstructor;
@@ -49,4 +49,18 @@ public class ContractDetailService {
     public void insertContractId(Long contractId){
         contractDetailsRepository.insertContractId(contractId, contractDetailsRepository.findLastId());
     }
+
+/*    @Transactional
+    public List<ContractDetails> findContractDetailsByContractId(Long contractId){
+        return contractDetailsRepository.findContractDetailsByContractId(contractId);
+    }*/
+
+/*    @Transactional
+    public void editContractDetails(Contract contract){
+        List<ContractDetails> contractDetailsList = findContractDetailsByContractId(contract.getId());
+        for(ContractDetails contractDetails : contractDetailsList){
+            daysAmountService.editDaysAmount(contractDetails);
+        }
+        contract.setContractDetails(contractDetailsList);
+    }*/
 }

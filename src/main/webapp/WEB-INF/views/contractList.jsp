@@ -184,8 +184,8 @@
                                 <td>
                                     <a href="/contract/editContract?id=${contract.id}" class="btn btn-danger rounded-0 text-light m-1">Edytuj kontrakt</a>
                                     <a href="/contract/deleteContractView/${contract.id}/${contract.name}" class="btn btn-danger rounded-0 text-light m-1">Usuń kontrakt</a>
-                                    <a href="/contract/addInstructor?id=${contract.id}" class="btn btn-danger rounded-0 text-light m-1">Dodaj instruktora</a>
-                                    <a href="/contract/deleteInstructor?id=${contract.id}" class="btn btn-danger rounded-0 text-light m-1">Usuń instruktora</a>
+                                    <a href="/contract/addInspector?id=${contract.id}" class="btn btn-danger rounded-0 text-light m-1">Dodaj instruktora</a>
+                                    <a href="/contract/deleteInspector?id=${contract.id}" class="btn btn-danger rounded-0 text-light m-1">Usuń instruktora</a>
                                 </td>
                             </tr>
                         </c:forEach>

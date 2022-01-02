@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -19,8 +20,7 @@ public class ContractService {
 
     private final ContractRepository contractRepository;
     private final ContractDetailService contractDetailsService;
-    private final InspectorRepository inspectorRepository;
-    private final ContractDetailsRepository contractDetailsRepository;
+    private final InspectorService inspectorService;
 
     @Transactional
     public List<Contract> findAllContracts(){
@@ -41,10 +41,10 @@ public class ContractService {
     public Map<Contract, ContractDetails> contractMap(Long inspectorId){
 
         Map<Contract, ContractDetails> map = new HashMap<>();
-        Inspector inspector = inspectorRepository.findInspectorById(inspectorId);
+        Inspector inspector = inspectorService.findById(inspectorId);
         List<Contract> contractList = inspector.getContractList();
         for(Contract c : contractList){
-            map.put(c, contractDetailsRepository.findContractDetailsWithInspectorIdAndContractId(inspectorId, c.getId()));
+            map.put(c, contractDetailsService.findContractDetailsByInspectorIdAndContractId(inspectorId, c.getId()));
         }
         return map;
     }
@@ -75,5 +75,43 @@ public class ContractService {
             inspectorDetailsMap.put(i, contractDetailsService.findContractDetailsByInspectorIdAndContractId(i.getId(), contractId));
         }
         return inspectorDetailsMap;
+    }
+
+    @Transactional
+    public void addInspectors(Contract contract){
+        List<Inspector> inspectorList = contract.getInspectorList();
+        for(Inspector i : inspectorList){
+            List<Contract> contractList = i.getContractList();
+            contractList.add(contract);
+            i.setContractList(contractList);
+            inspectorService.addInspector(i);
+        }
+    }
+
+    @Transactional
+    public List<Inspector> allInspectorExceptAlreadyConnected(Contract contract){
+        List<Inspector> inspectorList = inspectorService.findAllInspectors();
+        List<Inspector> contractInspectorList = contract.getInspectorList();
+        return inspectorList.stream()
+                .filter(s -> !contractInspectorList.contains(s))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void deleteInspectorFromContract(List<Inspector> inspectorList, Contract contract){
+        List<Inspector> inspectorList1 = contract.getInspectorList();
+        for(Inspector i : inspectorList){
+            List<Contract> contractList = i.getContractList();
+            List<Contract> contractList1 = contractList.stream()
+                    .filter(c -> !contractList.contains(contract))
+                    .collect(Collectors.toList());
+            i.setContractList(contractList1);
+            inspectorService.addInspector(i);
+        }
+        List<Inspector> inspectorList2 = inspectorList1.stream()
+                .filter(i -> !inspectorList.contains(i))
+                .collect(Collectors.toList());
+        contract.setInspectorList(inspectorList2);
+        contractRepository.save(contract);
     }
 }
