@@ -1,8 +1,11 @@
 package com.openSource.attendanceListManager.controller;
 
 import com.openSource.attendanceListManager.entity.*;
+import com.openSource.attendanceListManager.repository.MonthNameRepository;
 import com.openSource.attendanceListManager.service.*;
 import lombok.AllArgsConstructor;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,8 @@ public class ListAttendanceController {
     private final ContractService contractService;
     private final DaysAmountService daysAmountService;
     private final DaysService daysService;
+    private final JavaMailSender javaMailSender;
+    private final MonthNameRepository monthNameRepository;
 
     @GetMapping("/view")
     public String listAttendanceView(@RequestParam(name = "insp") Long inspectorId, @RequestParam(name = "conDet") Long conDetId, Model model,
@@ -69,7 +74,6 @@ public class ListAttendanceController {
         Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
 
         List<ContractDetails> contractDetailsList = contractDetailService.findContractDetailsByInspectorId(inspectorId);
-        String message = "";
 
         if(daysAmount.getAmountOfDaysInMonth() == daysAmount.getAttendanceList().size()){
 
@@ -82,7 +86,6 @@ public class ListAttendanceController {
             model.addAttribute("conDet", contractDetailsId);
             model.addAttribute("year", year);
             model.addAttribute("month", monthValue);
-            model.addAttribute("message", message);
 
             if("SuperAdmin".equals(inspector.getRole())){
                 return "redirect:/superAdmin/superAdminHome";
@@ -99,7 +102,6 @@ public class ListAttendanceController {
                 for(DaysAmount da : cd.getListDaysAmount()){
                     for(Days d : da.getAttendanceList()){
                         if(d.getMonthDay() == monthDay && da.getMonthNumber() == monthValue && da.getYear() == year){
-                            message = "W tym dniu inspektor już został wpisany";
 
                             model.addAttribute("monthDay", monthDay);
                             model.addAttribute("inspector", inspector);
@@ -110,7 +112,6 @@ public class ListAttendanceController {
                             model.addAttribute("conDet", contractDetailsId);
                             model.addAttribute("year", year);
                             model.addAttribute("month", monthValue);
-                            model.addAttribute("message", message);
 
                             if("SuperAdmin".equals(inspector.getRole())){
                                 return "redirect:/superAdmin/superAdminHome";
@@ -138,13 +139,26 @@ public class ListAttendanceController {
         daysAmount.setAttendanceList(daysList);
         daysAmountService.addDaysAmount(daysAmount);
 
+        String addDay = String.valueOf(monthDay);
+        String addMonth = String.valueOf(monthNameRepository.findMonthNameById(monthValue).getName());
+        String addYear = String.valueOf(year);
+
+        String to = "piotrorzelpioro@gmail.com";
+        String subject = "Temat";
+        String text = "Dodano dzień do listy obecności: " + addDay + " " + addMonth + " " + addYear;
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("noreplaytest777@gmail.com");
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        javaMailSender.send(message);
+
         model.addAttribute("insp", inspectorId);
         model.addAttribute("conDet", contractDetailsId);
         model.addAttribute("con", contractId);
         model.addAttribute("dayAmountId", dayAmountId);
-        model.addAttribute("message", message);
         model.addAttribute("monthDay", monthDay);
-        model.addAttribute("inspector", inspector);
 
         if("SuperAdmin".equals(inspector.getRole())){
             return "redirect:/superAdmin/superAdminHome";
