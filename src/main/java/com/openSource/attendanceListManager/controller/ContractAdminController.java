@@ -31,7 +31,7 @@ public class ContractAdminController {
         Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
 
         List<Contract> contractList = contractService.findContractByContractAdministrator(inspector);
-        Map<Contract, Map<Inspector, ContractDetails>> inspectorWithDetails = new HashMap<>();
+        Map<Contract, Map<Inspector, ContractDetails>> inspectorWithDetails = new LinkedHashMap<>();
 
         for(Contract c : contractList){
             inspectorWithDetails.put(c, contractService.inspectorAndDetailsMap(c.getId()));

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +35,7 @@ public class SuperAdminController {
         Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
 
         List<Contract> contractList = contractService.findAllContracts();
-        Map<Contract, Map<Inspector, ContractDetails>> inspectorWithDetails = new HashMap<>();
+        Map<Contract, Map<Inspector, ContractDetails>> inspectorWithDetails = new LinkedHashMap<>();
 
         for(Contract c : contractList){
             inspectorWithDetails.put(c, contractService.inspectorAndDetailsMap(c.getId()));

@@ -3,15 +3,11 @@ package com.openSource.attendanceListManager.service;
 import com.openSource.attendanceListManager.entity.Contract;
 import com.openSource.attendanceListManager.entity.ContractDetails;
 import com.openSource.attendanceListManager.entity.Inspector;
-import com.openSource.attendanceListManager.repository.ContractDetailsRepository;
 import com.openSource.attendanceListManager.repository.ContractRepository;
-import com.openSource.attendanceListManager.repository.InspectorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,7 +20,10 @@ public class ContractService {
 
     @Transactional
     public List<Contract> findAllContracts(){
-        return contractRepository.findAll();
+        List<Contract> contractList = contractRepository.findAll();
+        return contractList.stream()
+                .sorted(Comparator.comparing(Contract::getName))
+                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -64,14 +63,21 @@ public class ContractService {
 
     @Transactional
     public List<Contract> findContractByContractAdministrator(Inspector inspector){
-        return contractRepository.findContractByContractAdministrator(inspector);
+        List<Contract> contractList = contractRepository.findContractByContractAdministrator(inspector);
+        return contractList.stream()
+                .sorted(Comparator.comparing(Contract::getName))
+                .collect(Collectors.toList());
     }
 
     @Transactional
     public Map<Inspector, ContractDetails> inspectorAndDetailsMap(Long contractId){
         List<Inspector> inspectorList = contractRepository.findContractById(contractId).getInspectorList();
-        Map<Inspector, ContractDetails> inspectorDetailsMap = new HashMap<>();
-        for(Inspector i : inspectorList){
+        List<Inspector> sortedList = inspectorList.stream()
+                .sorted(Comparator.comparing(Inspector::getLastName)
+                .thenComparing(Inspector::getFirstName))
+                .collect(Collectors.toList());
+        Map<Inspector, ContractDetails> inspectorDetailsMap = new LinkedHashMap<>();
+        for(Inspector i : sortedList){
             inspectorDetailsMap.put(i, contractDetailsService.findContractDetailsByInspectorIdAndContractId(i.getId(), contractId));
         }
         return inspectorDetailsMap;
@@ -97,6 +103,7 @@ public class ContractService {
                 .collect(Collectors.toList());
     }
 
+    //przekazuję listę inspektorów którą chcę usunąć i kontrakt z którego chcę usunąć inspektorów
     @Transactional
     public void deleteInspectorFromContract(List<Inspector> inspectorList, Contract contract){
         List<Inspector> inspectorList1 = contract.getInspectorList();
