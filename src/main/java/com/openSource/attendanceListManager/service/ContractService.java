@@ -113,7 +113,7 @@ public class ContractService {
         for(Inspector i : inspectorList){
             List<Contract> contractList = i.getContractList();
             List<Contract> contractList1 = contractList.stream()
-                    .filter(c -> !contractList.contains(contract))
+                    .filter(c -> c.getId() != contract.getId())
                     .collect(Collectors.toList());
             i.setContractList(contractList1);
             inspectorService.addInspector(i);
