@@ -4,8 +4,6 @@ import com.openSource.attendanceListManager.entity.*;
 import com.openSource.attendanceListManager.repository.MonthNameRepository;
 import com.openSource.attendanceListManager.service.*;
 import lombok.AllArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,14 +24,35 @@ public class ListAttendanceController {
     private final ContractService contractService;
     private final DaysAmountService daysAmountService;
     private final DaysService daysService;
-    private final JavaMailSender javaMailSender;
     private final MonthNameRepository monthNameRepository;
+    private final EmailService emailService;
 
     @GetMapping("/view")
-    public String listAttendanceView(@RequestParam(name = "insp") Long inspectorId, @RequestParam(name = "conDet") Long conDetId, Model model,
-                                     @RequestParam(name = "con") Long conId, @RequestParam(name = "dayAmountId") int dayAmountId,
-                                     @RequestParam(name = "monthValue") int monthValue, @RequestParam(name = "year") int year,
-                                     HttpSession session){
+    public String listAttendanceView(@RequestParam(name = "insp", defaultValue = "0") Long inspectorId, @RequestParam(name = "conDet", defaultValue = "0") Long conDetId, Model model,
+                                     @RequestParam(name = "con", defaultValue = "0") Long conId, @RequestParam(name = "dayAmountId", defaultValue = "0") int dayAmountId,
+                                     @RequestParam(name = "monthValue", defaultValue = "0") int monthValue, @RequestParam(name = "year", defaultValue = "0") int year,
+                                     HttpSession session, @RequestParam(value = "message", defaultValue = "") String message){
+        if(inspectorId == 0){
+            inspectorId = (Long) session.getAttribute("insp");
+        }
+        if(conDetId == 0){
+            conDetId = (Long) session.getAttribute("conDet");
+        }
+        if(conId == 0){
+            conId = (Long) session.getAttribute("con");
+        }
+        if(dayAmountId == 0){
+            dayAmountId = (Integer) session.getAttribute("dayAmountId");
+        }
+        if(monthValue == 0){
+            monthValue = (Integer) session.getAttribute("monthValue");
+        }
+        if(year == 0){
+            year = (Integer) session.getAttribute("year");
+        }
+        if("".equals(message)){
+            message = (String) session.getAttribute("message");
+        }
 
         Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
         Inspector insp = inspectorService.findById(inspectorId);
@@ -60,42 +79,37 @@ public class ListAttendanceController {
         model.addAttribute("contractDetails", contractDetails);
         model.addAttribute("contract", contract);
         model.addAttribute("contractDetailsMap", contractDetailsMap);
+        model.addAttribute("message", message);
 
         return "listAttendance";
     }
 
     @GetMapping("/setDay")
-    public String addDayToAttendanceList(@RequestParam(name = "monthDay") int monthDay, HttpSession session, @RequestParam(name = "weekDay") int weekDay,
-                                         @RequestParam(name = "dayAmountId") Integer dayAmountId, Model model, @RequestParam(name = "contractId") Long contractId,
-                                         @RequestParam(name = "insp") Long inspectorId, @RequestParam(name = "contractDetailsId") Long contractDetailsId,
-                                         @RequestParam(name = "year") int year, @RequestParam(name = "monthValue") int monthValue){
+    public String addDayToAttendanceList(@RequestParam(name = "monthDay") int monthDay, @RequestParam(name = "weekDay") int weekDay,
+                                         @RequestParam(name = "dayAmountId") Integer dayAmountId, @RequestParam(name = "insp") Long inspectorId,
+                                         @RequestParam(name = "year") int year, @RequestParam(name = "monthValue") int monthValue,
+                                         @RequestParam(name = "contractId") Long contractId, HttpSession session,
+                                         @RequestParam(name = "contractDetailsId") Long conDetId){
 
         DaysAmount daysAmount = daysAmountService.findDaysAmountById(dayAmountId);
-        Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
-
         List<ContractDetails> contractDetailsList = contractDetailService.findContractDetailsByInspectorId(inspectorId);
+        Contract contract = contractService.findContractById(contractId);
+        Inspector inspector1 = inspectorService.findById(inspectorId);
 
         if(daysAmount.getAmountOfDaysInMonth() == daysAmount.getAttendanceList().size()){
 
-            model.addAttribute("monthDay", monthDay);
-            model.addAttribute("inspector", inspector);
-            model.addAttribute("weekDay", weekDay);
-            model.addAttribute("dayAmountId", dayAmountId);
-            model.addAttribute("con", contractId);
-            model.addAttribute("insp", inspectorId);
-            model.addAttribute("conDet", contractDetailsId);
-            model.addAttribute("year", year);
-            model.addAttribute("month", monthValue);
+            String message = "Inspektor " + inspector1.getFullName() + " na kontrakcie " + contract.getName() + " ma już uzupełnione wszystkie dniówki!";
 
-            if("SuperAdmin".equals(inspector.getRole())){
-                return "redirect:/superAdmin/superAdminHome";
-            }
-            else if("contractAdmin".equals(inspector.getRole())){
-                return "redirect:/contractAdmin/contractAdminHome";
-            }
-            else{
-                return "redirect:/inspector/profile";
-            }
+            session.setAttribute("message", message);
+            session.setAttribute("insp", inspectorId);
+            session.setAttribute("conDet", conDetId);
+            session.setAttribute("con", contractId);
+            session.setAttribute("dayAmountId", dayAmountId);
+            session.setAttribute("monthValue", monthValue);
+            session.setAttribute("year", year);
+
+            return "redirect:/listAttendance/view";
+
         }
         else {
             for(ContractDetails cd : contractDetailsList){
@@ -103,25 +117,18 @@ public class ListAttendanceController {
                     for(Days d : da.getAttendanceList()){
                         if(d.getMonthDay() == monthDay && da.getMonthNumber() == monthValue && da.getYear() == year){
 
-                            model.addAttribute("monthDay", monthDay);
-                            model.addAttribute("inspector", inspector);
-                            model.addAttribute("weekDay", weekDay);
-                            model.addAttribute("dayAmountId", dayAmountId);
-                            model.addAttribute("con", contractId);
-                            model.addAttribute("insp", inspectorId);
-                            model.addAttribute("conDet", contractDetailsId);
-                            model.addAttribute("year", year);
-                            model.addAttribute("month", monthValue);
+                            String monthName = monthNameRepository.findMonthNameById(monthValue).getNameVariation();
+                            String message = "Inspektor " + inspector1.getFullName() + " w " + monthName + " " + monthDay + "-go był już wpisany!";
 
-                            if("SuperAdmin".equals(inspector.getRole())){
-                                return "redirect:/superAdmin/superAdminHome";
-                            }
-                            else if("contractAdmin".equals(inspector.getRole())){
-                                return "redirect:/contractAdmin/contractAdminHome";
-                            }
-                            else{
-                                return "redirect:/inspector/profile";
-                            }
+                            session.setAttribute("message", message);
+                            session.setAttribute("insp", inspectorId);
+                            session.setAttribute("conDet", conDetId);
+                            session.setAttribute("con", contractId);
+                            session.setAttribute("dayAmountId", dayAmountId);
+                            session.setAttribute("monthValue", monthValue);
+                            session.setAttribute("year", year);
+
+                            return "redirect:/listAttendance/view";
                         }
                     }
                 }
@@ -143,32 +150,21 @@ public class ListAttendanceController {
         String addMonth = String.valueOf(monthNameRepository.findMonthNameById(monthValue).getName());
         String addYear = String.valueOf(year);
 
-        String to = "piotrorzelpioro@gmail.com";
+        String to = inspector1.getEmail();
         String subject = "Temat";
-        String text = "Dodano dzień do listy obecności: " + addDay + " " + addMonth + " " + addYear;
+        String text = "Dodano dzień do listy obecności inspektora " + inspector1.getFullName() + " na kontrakcie " + contract.getName() + ": " + addDay + " " + addMonth + " " + addYear;
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("noreplaytest777@gmail.com");
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
-        javaMailSender.send(message);
+        emailService.sendMessage(subject, text, to);
 
-        model.addAttribute("insp", inspectorId);
-        model.addAttribute("conDet", contractDetailsId);
-        model.addAttribute("con", contractId);
-        model.addAttribute("dayAmountId", dayAmountId);
-        model.addAttribute("monthDay", monthDay);
+        session.setAttribute("message", text);
+        session.setAttribute("insp", inspectorId);
+        session.setAttribute("conDet", conDetId);
+        session.setAttribute("con", contractId);
+        session.setAttribute("dayAmountId", dayAmountId);
+        session.setAttribute("monthValue", monthValue);
+        session.setAttribute("year", year);
 
-        if("SuperAdmin".equals(inspector.getRole())){
-            return "redirect:/superAdmin/superAdminHome";
-        }
-        else if("contractAdmin".equals(inspector.getRole())){
-            return "redirect:/contractAdmin/contractAdminHome";
-        }
-        else{
-            return "redirect:/inspector/profile";
-        }
+        return "redirect:/listAttendance/view";
     }
     }
 }

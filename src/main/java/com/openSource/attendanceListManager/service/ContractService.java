@@ -39,9 +39,12 @@ public class ContractService {
     @Transactional
     public Map<Contract, ContractDetails> contractMap(Long inspectorId){
 
-        Map<Contract, ContractDetails> map = new HashMap<>();
+        Map<Contract, ContractDetails> map = new LinkedHashMap<>();
         Inspector inspector = inspectorService.findById(inspectorId);
-        List<Contract> contractList = inspector.getContractList();
+        List<Contract> contractList = inspector.getContractList()
+                .stream()
+                .sorted(Comparator.comparing(Contract::getName))
+                .collect(Collectors.toList());
         for(Contract c : contractList){
             map.put(c, contractDetailsService.findContractDetailsByInspectorIdAndContractId(inspectorId, c.getId()));
         }

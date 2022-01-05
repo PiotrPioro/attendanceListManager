@@ -224,7 +224,13 @@
                         </tr>
                         </tbody>
                     </table>
+                </div>
 
+                <div class="row">
+                    <h4 style="color: red">${message}<br></h4>
+                </div>
+
+                <div class="row">
                     <table cellspacing="0" cellpadding="0" border="1" style="width: 100%;">
                             <h5>
                                 <br>

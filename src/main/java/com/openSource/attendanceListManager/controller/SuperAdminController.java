@@ -12,7 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
@@ -30,7 +33,12 @@ public class SuperAdminController {
     private final MonthNameRepository monthNameRepository;
 
     @GetMapping("/superAdminHome")
-    public String superAdminHomeView(HttpSession session, Model model){
+    public String superAdminHomeView(HttpSession session, Model model, HttpServletRequest request){
+
+        if(request.getParameter("message") != null){
+            String message = request.getParameter("message");
+            model.addAttribute("message", message);
+        }
 
         Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
 
