@@ -171,4 +171,50 @@ public class ListAttendanceController {
         return "redirect:/listAttendance/view";
     }
     }
+
+    @GetMapping("/deleteDay")
+    public String deleteDay(@RequestParam(name = "monthDay") int monthDay, @RequestParam(name = "insp") Long inspectorId,
+                            @RequestParam(name = "dayAmountId") Integer dayAmountId,
+                            @RequestParam(name = "year") int year, @RequestParam(name = "monthValue") int monthValue,
+                            @RequestParam(name = "contractId") Long contractId, HttpSession session,
+                            @RequestParam(name = "contractDetailsId") Long conDetId){
+
+        ContractDetails contractDetails = contractDetailService.findContractDetailsByInspectorIdAndContractId(inspectorId, contractId);
+        Contract contract = contractService.findContractById(contractId);
+        Inspector inspector1 = inspectorService.findById(inspectorId);
+        String monthName = monthNameRepository.findMonthNameById(monthValue).getName();
+
+
+        for(DaysAmount da : contractDetails.getListDaysAmount()){
+            for(Days d : da.getAttendanceList()){
+                if(d.getMonthDay() == monthDay && da.getMonthNumber() == monthValue && da.getYear() == year){
+
+                    daysService.deleteDay(d.getId());
+                    String message = "Usunięto dzień z listy obecności inspektora " + inspector1.getFullName() + " na kontrakcie " + contract.getName() + ": " + monthDay + " " + monthName + " " + year;
+
+                    session.setAttribute("message", message);
+                    session.setAttribute("insp", inspectorId);
+                    session.setAttribute("conDet", conDetId);
+                    session.setAttribute("con", contractId);
+                    session.setAttribute("dayAmountId", dayAmountId);
+                    session.setAttribute("monthValue", monthValue);
+                    session.setAttribute("year", year);
+
+                    return "redirect:/listAttendance/view";
+                }
+            }
+        }
+
+        String message = "Dnia " + monthDay + " " + monthName + " " + year + " nie ma na liście obecności inspektora " + inspector1.getFullName() + " na kontrakcie " + contract.getName();
+
+        session.setAttribute("message", message);
+        session.setAttribute("insp", inspectorId);
+        session.setAttribute("conDet", conDetId);
+        session.setAttribute("con", contractId);
+        session.setAttribute("dayAmountId", dayAmountId);
+        session.setAttribute("monthValue", monthValue);
+        session.setAttribute("year", year);
+
+        return "redirect:/listAttendance/view";
+    }
 }
