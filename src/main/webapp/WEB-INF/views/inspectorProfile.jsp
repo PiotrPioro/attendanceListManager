@@ -85,6 +85,20 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
 
+        <c:if test="${admin != null}">
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Widok administratora
+        </div>
+
+        <!-- Nav Item - addContract -->
+        <li class="nav-item">
+            <a class="nav-link" href="/contractAdmin/contractAdminHome">
+                <span>Strona główna</span>
+            </a>
+        </li>
+        </c:if>
+
         <!-- Heading -->
         <div class="sidebar-heading">
             Uprawnienia

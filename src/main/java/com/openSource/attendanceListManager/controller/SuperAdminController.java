@@ -42,25 +42,34 @@ public class SuperAdminController {
 
         Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
 
-        List<Contract> contractList = contractService.findAllContracts();
-        Map<Contract, Map<Inspector, ContractDetails>> inspectorWithDetails = new LinkedHashMap<>();
+        if("SuperAdmin".equals(inspector.getRole())){
 
-        for(Contract c : contractList){
-            inspectorWithDetails.put(c, contractService.inspectorAndDetailsMap(c.getId()));
+            List<Contract> contractList = contractService.findAllContracts();
+            Map<Contract, Map<Inspector, ContractDetails>> inspectorWithDetails = new LinkedHashMap<>();
+
+            for(Contract c : contractList){
+                inspectorWithDetails.put(c, contractService.inspectorAndDetailsMap(c.getId()));
+            }
+
+            LocalDate date = LocalDate.now();
+            MonthsName month = monthNameRepository.findMonthNameById(date.getMonthValue());
+
+            model.addAttribute("inspectorMap", inspectorWithDetails);
+            model.addAttribute("inspector", inspector);
+            model.addAttribute("monthList", calendarService.getCalendarList(calendarService.currentMonth(), date.getYear()));
+            model.addAttribute("currentDay", date.getDayOfMonth());
+            model.addAttribute("currentDate", date);
+            model.addAttribute("year", date.getYear());
+            model.addAttribute("monthValue", date.getMonthValue());
+            model.addAttribute("month", month);
+
+            return "superAdminHome";
         }
-
-        LocalDate date = LocalDate.now();
-        MonthsName month = monthNameRepository.findMonthNameById(date.getMonthValue());
-
-        model.addAttribute("inspectorMap", inspectorWithDetails);
-        model.addAttribute("inspector", inspector);
-        model.addAttribute("monthList", calendarService.getCalendarList(calendarService.currentMonth(), date.getYear()));
-        model.addAttribute("currentDay", date.getDayOfMonth());
-        model.addAttribute("currentDate", date);
-        model.addAttribute("year", date.getYear());
-        model.addAttribute("monthValue", date.getMonthValue());
-        model.addAttribute("month", month);
-
-        return "superAdminHome";
+        else if("contractAdmin".equals(inspector.getRole())){
+            return "redirect:/contractAdmin/contractAdminHome";
+        }
+        else{
+            return "redirect:/inspector/profile";
+        }
     }
 }

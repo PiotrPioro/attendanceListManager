@@ -48,6 +48,13 @@ public class InspectorController {
         model.addAttribute("contractMap", contractDetailsMap);
         model.addAttribute("inspector", inspector);
 
+        if("contractAdmin".equals(inspector.getRole())){
+            model.addAttribute("admin", "yes");
+        }
+        else{
+            model.addAttribute("admin", null);
+        }
+
         return "inspectorProfile";
     }
 
