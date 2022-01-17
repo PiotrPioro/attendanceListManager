@@ -22,7 +22,4 @@ public interface ContractDetailsRepository extends JpaRepository<ContractDetails
 
     @Query(value = "select id from contract_details order by id desc limit 1", nativeQuery = true)
     Long findLastId();
-
-    /*@Query
-    List<ContractDetails> findContractDetailsByContractId(Long contractId);*/
 }

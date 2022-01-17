@@ -15,7 +15,7 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
 
     List<Contract> findContractByContractAdministrator(Inspector inspector);
 
-    @Modifying
+/*    @Modifying
     @Query(value = "delete inspectors_contract_list where contract_id = ?1", nativeQuery = true)
-    void deleteInspectorContract(Long contractId);
+    void deleteInspectorContract(Long contractId);*/
 }

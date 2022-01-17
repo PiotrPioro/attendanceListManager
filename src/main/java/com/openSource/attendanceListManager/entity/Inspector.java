@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "inspectors")
@@ -42,6 +43,9 @@ public class Inspector {
     private List<Contract> contractList = new ArrayList<>();
 
     private String role;
+
+    @OneToMany
+    private Set<Token> tokens;
 
     public String getFullName(){
         return firstName + " " + lastName;

@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Tworzenie konta</title>
+    <title>Reset Password</title>
 
     <!-- Custom fonts for this template-->
     <link href="<c:url value="/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet" type="text/css">
@@ -36,33 +36,14 @@
                 <div class="col-lg-7">
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Stwórz konto</h1>
+                            <h1 class="h4 text-gray-900 mb-4">Podaj maila</h1>
                         </div>
-                        <form:form action="/attendanceListManager/register" method="post" modelAttribute="inspector">
+                        <form method="post">
 
-                            Imię:<form:input path="firstName" placeholder="Wpisz imię"/><br>
-                            <form:errors path="firstName"/><br>
+                            Mail:<input name="email"/>
 
-                            Nazwisko:<form:input path="lastName" placeholder="Wpisz nazwisko"/><br>
-                            <form:errors path="lastName"/><br>
-
-                            Email:<form:input path="email" placeholder="Wpisz email"/><br>
-                            <form:errors path="email"/><br>
-
-                            Telefon:<form:input path="phoneNumber" placeholder="Podaj numer telefonu"/><br>
-                            <form:errors path="phoneNumber"/><br>
-
-                            Hasło:<form:input path="password" type="password" placeholder="Podaj hasło"/><br>
-                            <form:errors path="password"/><br>
-
-                            Powtórz Hasło:<input name="repassword" type="password" placeholder="Powtórz hasło"/><br>
-
-                            <input type="submit" value="Zapisz"><br>
-                        </form:form>
-                        <hr>
-                        <div class="text-center">
-                            <a class="small" href="/attendanceListManager/login">Masz już konto? Zaloguj się</a>
-                        </div>
+                            <input type="submit" value="Zmień hasło"><br>
+                        </form>
                     </div>
                 </div>
             </div>

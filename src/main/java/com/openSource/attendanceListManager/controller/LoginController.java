@@ -56,11 +56,6 @@ public class LoginController {
         return "redirect:/attendanceListManager/login";
     }
 
-    @GetMapping("/lostPassword")
-    public String lostPassword(){
-        return "lostPassword";
-    }
-
     @ModelAttribute("contracts")
     public List<Contract> contractList(){
         return contractService.findAllContracts();

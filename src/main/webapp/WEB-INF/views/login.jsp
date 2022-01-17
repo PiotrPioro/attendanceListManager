@@ -50,15 +50,15 @@
                                         <input name="password" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Hasło"/>
                                     </div>
 
-                                        <div class="custom-control custom-checkbox small">
+                                      <%--  <div class="custom-control custom-checkbox small">
                                             <input type="checkbox" class="custom-control-input" id="customCheck">
                                             <label class="custom-control-label" for="customCheck">Pamiętaj mnie</label>
-                                        </div>
+                                        </div>--%>
                                     <input type="submit" value="Zaloguj">
                                 </form>
                                 <hr>
                                 <div class="text-center">
-                                    <a class="small" href="/attendanceListManager/lostPassword">Zapomniałeś hasła?</a>
+                                    <a class="small" href="/password/resetPassword">Zapomniałeś hasła?</a>
                                 </div>
                                 <div class="text-center">
                                     <a class="small" href="/attendanceListManager/register">Utwórz konto</a>

@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Utrata hasła</title>
+    <title>Kod</title>
 
     <!-- Custom fonts for this template-->
     <link href="<c:url value="/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet" type="text/css">
@@ -28,13 +28,28 @@
 
 <div class="container">
 
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
-        <div class="text-center">
-            <p><span style="font-size: xxx-large; color: red; "></span>Ta funkcja nie jest obsługiwana</p>
-            <a class="big" href="/login">Zaloguj</a>
-        </div>
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <%--<div class="col-lg-5 d-none d-lg-block bg-register-image"></div>--%>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Wpisz kod</h1>
+                        </div>
+                        <form method="post">
 
+                            <input type="hidden" name="email" value="${inspector.email}"/>
+
+                            Kod:<input name="token" placeholder="kod"/>
+
+                            <input type="submit" value="Wyślij"><br>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
