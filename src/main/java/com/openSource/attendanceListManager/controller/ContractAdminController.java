@@ -65,14 +65,14 @@ public class ContractAdminController {
     public String addRoleView(Model model, HttpSession session){
         Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
 
-        if("SuperAdmin".equals(inspector.getRole())){
+        /*if("SuperAdmin".equals(inspector.getRole())){*/
             List<Inspector> inspectorList = inspectorService.findAllInspectors();
             model.addAttribute("inspectors", inspectorList);
             return "addRoleView";
-        }
+       /* }
         else{
             return "redirect:/inspector/checkRole";
-        }
+        }*/
     }
 
     @GetMapping("/addRole")
