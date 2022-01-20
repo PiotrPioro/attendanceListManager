@@ -202,10 +202,22 @@
                                 <c:when test="${dayOfMonth.weekDay == 1}">
                                     <c:choose>
                                         <c:when test="${currentDate.dayOfMonth == dayOfMonth.monthDay && currentDate.monthValue == monthValue && currentDate.year == year}">
-                                            <td style="color: red">${dayOfMonth.monthDay}*</td>
+                                            <td>
+                                                <p style="color: red">${dayOfMonth.monthDay}*   </p>
+                                                <c:if test="${dayOfMonth.monthDay != null}">
+                                                    <a style="color: green" href="/listAttendance/setDay?monthDay=${dayOfMonth.monthDay}&weekDay=${dayOfMonth.weekDay}&dayAmountId=${dayAmountId}&contractId=${contract.id}&insp=${insp.id}&contractDetailsId=${contractDetails.id}&monthValue=${monthValue}&year=${year}">Dodaj</a>
+                                                    <a style="color: red" href="/listAttendance/deleteDay?monthDay=${dayOfMonth.monthDay}&weekDay=${dayOfMonth.weekDay}&dayAmountId=${dayAmountId}&contractId=${contract.id}&insp=${insp.id}&contractDetailsId=${contractDetails.id}&monthValue=${monthValue}&year=${year}">Usuń</a>
+                                                </c:if>
+                                            </td>
                                         </c:when>
                                         <c:otherwise>
-                                            <td style="color: red">${dayOfMonth.monthDay}</td>
+                                            <td>
+                                                <p style="color: red">${dayOfMonth.monthDay}    </p>
+                                                <c:if test="${dayOfMonth.monthDay != null}">
+                                                    <a style="color: green" href="/listAttendance/setDay?monthDay=${dayOfMonth.monthDay}&weekDay=${dayOfMonth.weekDay}&dayAmountId=${dayAmountId}&contractId=${contract.id}&insp=${insp.id}&contractDetailsId=${contractDetails.id}&monthValue=${monthValue}&year=${year}">Dodaj</a>
+                                                    <a style="color: red" href="/listAttendance/deleteDay?monthDay=${dayOfMonth.monthDay}&weekDay=${dayOfMonth.weekDay}&dayAmountId=${dayAmountId}&contractId=${contract.id}&insp=${insp.id}&contractDetailsId=${contractDetails.id}&monthValue=${monthValue}&year=${year}">Usuń</a>
+                                                </c:if>
+                                            </td>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:when>

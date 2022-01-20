@@ -97,6 +97,20 @@
         </li>
 
         <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Twoje kontrakty
+        </div>
+
+        <!-- Nav Item - attendance -->
+        <li class="nav-item">
+            <a class="nav-link" href="/inspector/profile">
+                <span>Lista kontraktów na których pracujesz</span></a>
+        </li>
+
+        <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
@@ -197,10 +211,10 @@
                             </c:if>
                             <c:choose>
                                 <c:when test="${currentDate.dayOfMonth == dayOfMonth.monthDay && currentDate.monthValue == monthValue && currentDate.year == year}">
-                                    <td><a href="/calendar/addDayList/${dayOfMonth.monthDay}">${dayOfMonth.monthDay}*</a></td>
+                                    <td>${dayOfMonth.monthDay}*</td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td><a href="/calendar/addDayList/${dayOfMonth.monthDay}">${dayOfMonth.monthDay}</a></td>
+                                    <td>${dayOfMonth.monthDay}</td>
                                 </c:otherwise>
                             </c:choose>
                             </c:forEach>

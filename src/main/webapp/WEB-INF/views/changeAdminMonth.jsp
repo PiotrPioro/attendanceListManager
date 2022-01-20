@@ -195,7 +195,7 @@
 
                     <table cellspacing="0" cellpadding="0" border="1" style="width: 100%;">
 
-                        <h5><a href="/calendar/minusMonth?monthValue=${monthValue}&year=${year}"><-   </a> ${month.name} ${year}<a href="/calendar/plusMonth?monthValue=${monthValue}&year=${year}">    -></a></h5>
+                        <h5><a href="/calendar/minusAdminMonth?monthValue=${monthValue}&year=${year}"><-   </a> ${month.name} ${year}<a href="/calendar/plusAdminMonth?monthValue=${monthValue}&year=${year}">    -></a></h5>
                         <thead>
                         <tr>
                             <th>Poniedziałek</th>

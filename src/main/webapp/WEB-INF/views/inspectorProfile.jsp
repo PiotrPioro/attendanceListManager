@@ -97,6 +97,9 @@
                 <span>Strona główna</span>
             </a>
         </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
         </c:if>
 
         <!-- Sidebar Toggler (Sidebar) -->

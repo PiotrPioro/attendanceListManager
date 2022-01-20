@@ -85,20 +85,22 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
 
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Uprawnienia
-        </div>
+        <c:if test="${admin != null}">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Widok administratora
+            </div>
 
-        <!-- Nav Item - addContract -->
-        <li class="nav-item">
-            <a class="nav-link" href="/contractAdmin/addRoleView">
-                <span>Dodaj uprawnienia</span>
-            </a>
-        </li>
+            <!-- Nav Item - addContract -->
+            <li class="nav-item">
+                <a class="nav-link" href="/contractAdmin/contractAdminHome">
+                    <span>Strona główna</span>
+                </a>
+            </li>
 
         <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
+        <hr class="sidebar-divider">
+        </c:if>
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
@@ -197,10 +199,10 @@
                             </c:if>
                             <c:choose>
                                 <c:when test="${currentDate.dayOfMonth == dayOfMonth.monthDay && currentDate.monthValue == monthValue && currentDate.year == year}">
-                                    <td><a href="/calendar/addDayList/${dayOfMonth.monthDay}">${dayOfMonth.monthDay}*</a></td>
+                                    <td>${dayOfMonth.monthDay}*</td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td><a href="/calendar/addDayList/${dayOfMonth.monthDay}">${dayOfMonth.monthDay}</a></td>
+                                    <td>${dayOfMonth.monthDay}</td>
                                 </c:otherwise>
                             </c:choose>
                             </c:forEach>
