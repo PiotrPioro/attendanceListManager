@@ -89,7 +89,7 @@ public class InspectorController {
         inspectorService.editInspector(firstName, lastName, logInspector.getEmail());
         Inspector updatedInspector = inspectorService.findByEmail(logInspector.getEmail());
         model.addAttribute("loggedInspector", updatedInspector);
-        return "redirect:/inspector/profile";
+        return "redirect:/inspector/checkRole";
     }
 
     @GetMapping("/editPassword")
@@ -105,7 +105,7 @@ public class InspectorController {
         if(password.equals(repassword)) {
             inspectorService.findByEmail(logInspector.getEmail());
             inspectorService.editPassword(password, logInspector.getEmail());
-            return "redirect:/inspector/profile";
+            return "redirect:/inspector/checkRole";
         }
         return "editPassword";
     }

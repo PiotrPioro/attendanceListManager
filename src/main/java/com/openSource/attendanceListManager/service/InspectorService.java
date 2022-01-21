@@ -8,7 +8,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -55,7 +57,10 @@ public class InspectorService{
 
     @Transactional
     public List<Inspector> findAllInspectors(){
-        return inspectorRepository.findAll();
+        List<Inspector> inspectorList = inspectorRepository.findAll();
+        return inspectorList.stream()
+                .sorted(Comparator.comparing(Inspector::getLastName))
+                .collect(Collectors.toList());
     }
 
     @Transactional
