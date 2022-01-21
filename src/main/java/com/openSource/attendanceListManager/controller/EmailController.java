@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import javax.servlet.http.HttpSession;
 
 @Controller
 @AllArgsConstructor
@@ -29,10 +28,9 @@ public class EmailController {
     @GetMapping("/sendMessage")
     public String sendMessage(@RequestParam(name = "dayAmountId") Integer dayAmountId,
                               @RequestParam(name = "con") Long contractId, @RequestParam(name = "insp") Long inspectorId,
-                              HttpSession session, @RequestParam(name = "year") int year,
+                              @RequestParam(name = "year") int year,
                               @RequestParam(name = "monthValue") int monthValue){
 
-        Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
         Contract contract = contractService.findContractById(contractId);
         Inspector inspector1 = inspectorService.findById(inspectorId);
         DaysAmount daysAmount = daysAmountService.findDaysAmountById(dayAmountId);
@@ -43,14 +41,6 @@ public class EmailController {
         String to = inspector1.getEmail();
         emailService.sendMessage(subject, text, to);
 
-        if("SuperAdmin".equals(inspector.getRole())){
-            return "redirect:/superAdmin/superAdminHome";
-        }
-        else if("contractAdmin".equals(inspector.getRole())){
-            return "redirect:/contractAdmin/contractAdminHome";
-        }
-        else{
-            return "redirect:/inspector/profile";
-        }
+        return "redirect:/inspector/checkRole";
     }
 }

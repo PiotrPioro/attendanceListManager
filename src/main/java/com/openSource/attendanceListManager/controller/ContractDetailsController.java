@@ -30,42 +30,23 @@ public class ContractDetailsController {
 
     @PostMapping("/editContractDetails")
     public String editContractDetails(@ModelAttribute("contractDetails") @Valid ContractDetails contractDetails,
-                                      BindingResult result, HttpSession session){
+                                      BindingResult result){
         if(result.hasErrors()){
             return "addContractDetails";
         }
 
-        Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
         daysAmountService.editDaysAmount(contractDetails);
         contractDetailsService.addContractDetails(contractDetails);
 
-        if("SuperAdmin".equals(inspector.getRole())){
-            return "redirect:/superAdmin/superAdminHome";
-        }
-        else if("contractAdmin".equals(inspector.getRole())){
-            return "redirect:/contractAdmin/contractAdminHome";
-        }
-        else{
-            return "redirect:/inspector/profile";
-        }
+        return "redirect:/inspector/checkRole";
     }
 
     @GetMapping("/addContractDetails")
     public String addContractDetailsView(Model model, @RequestParam(name = "contractId") Long contractId,
-                                         @RequestParam(name = "insp") Long inspectorId, HttpSession session){
-
-        Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
+                                         @RequestParam(name = "insp") Long inspectorId){
 
         if(contractDetailsService.findContractDetailsByInspectorIdAndContractId(inspectorId, contractId) != null){
-            if("SuperAdmin".equals(inspector.getRole())){
-                return "redirect:/superAdmin/superAdminHome";
-            }
-            else if("contractAdmin".equals(inspector.getRole())){
-                return "redirect:/contractAdmin/contractAdminHome";
-            }
-            else{
-                return "redirect:/inspector/profile";
-            }
+            return "redirect:/inspector/checkRole";
         }
         else {
             model.addAttribute("inspectorId", inspectorId);
@@ -77,24 +58,16 @@ public class ContractDetailsController {
 
     @PostMapping("/addContractDetails")
     public String addContractDetails(@ModelAttribute("contractDetails") @Valid ContractDetails contractDetails, BindingResult result,
-                                     @RequestParam(name = "contractId") Long contractId, HttpSession session){
+                                     @RequestParam(name = "contractId") Long contractId){
         if(result.hasErrors()){
             return "addContractDetails";
         }
 
-        Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
         contractDetailsService.addContractDetails(contractDetails);
         contractDetailsService.insertContractId(contractId);
 
-        if("SuperAdmin".equals(inspector.getRole())){
-            return "redirect:/superAdmin/superAdminHome";
-        }
-        else if("contractAdmin".equals(inspector.getRole())){
-            return "redirect:/contractAdmin/contractAdminHome";
-        }
-        else{
-            return "redirect:/inspector/profile";
-        }
+        return "redirect:/inspector/checkRole";
+
     }
 
     @GetMapping("/deleteContractDetailsView/{id}")
@@ -108,19 +81,10 @@ public class ContractDetailsController {
     }
 
     @GetMapping("/deleteContractDetails/{id}")
-    public String deleteContractDetails(@PathVariable("id") Long id, HttpSession session){
+    public String deleteContractDetails(@PathVariable("id") Long id){
 
-        Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
         contractDetailsService.deleteContractDetails(id);
 
-        if("SuperAdmin".equals(inspector.getRole())){
-            return "redirect:/superAdmin/superAdminHome";
-        }
-        else if("contractAdmin".equals(inspector.getRole())){
-            return "redirect:/contractAdmin/contractAdminHome";
-        }
-        else{
-            return "redirect:/inspector/profile";
-        }
+        return "redirect:/inspector/checkRole";
     }
 }

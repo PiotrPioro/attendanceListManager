@@ -1,7 +1,5 @@
 package com.openSource.attendanceListManager.service;
 
-import com.openSource.attendanceListManager.entity.Contract;
-import com.openSource.attendanceListManager.entity.ContractDetails;
 import com.openSource.attendanceListManager.entity.Inspector;
 import com.openSource.attendanceListManager.repository.InspectorRepository;
 import lombok.AllArgsConstructor;
@@ -61,13 +59,5 @@ public class InspectorService{
         return inspectorList.stream()
                 .sorted(Comparator.comparing(Inspector::getLastName))
                 .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public void deleteContractFromInspector(Inspector inspector, Contract contract){
-        List<Contract> contractList = inspector.getContractList();
-        contractList.remove(contract);
-        inspector.setContractList(contractList);
-        inspectorRepository.save(inspector);
     }
 }

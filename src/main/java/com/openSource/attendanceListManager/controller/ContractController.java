@@ -23,7 +23,6 @@ public class ContractController {
 
     private final ContractService contractService;
     private final InspectorService inspectorService;
-    private final ContractDetailService contractDetailService;
 
     @GetMapping("/addContract")
     public String addContractView(Model model){
@@ -144,7 +143,8 @@ public class ContractController {
     }
 
     @PostMapping("/deleteInspector")
-    public String deleteInstructor(@ModelAttribute("contract") @Valid Contract contract, @RequestParam(name = "inspectorToDelete") String[] inspectorsId, HttpSession session){
+    public String deleteInstructor(@ModelAttribute("contract") @Valid Contract contract,
+                                   @RequestParam(name = "inspectorToDelete") String[] inspectorsId, HttpSession session){
         List<Inspector> inspectorList = new ArrayList<>();
         for(String s : inspectorsId){
             inspectorList.add(inspectorService.findById(Long.parseLong(s)));
