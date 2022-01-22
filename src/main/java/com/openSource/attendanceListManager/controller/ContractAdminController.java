@@ -87,6 +87,6 @@ public class ContractAdminController {
         Inspector inspector = inspectorService.findById(inspectorId);
         inspector.setRole(role);
         inspectorService.addInspector(inspector);
-        return "redirect:/inspector/checkRole";
+        return "redirect:/contractAdmin/addRoleView";
     }
 }
