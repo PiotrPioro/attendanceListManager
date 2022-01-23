@@ -39,8 +39,7 @@ public class DaysAmountController {
 
     @PostMapping("/editDaysAmount")
     public String editDaysAmount(@ModelAttribute("daysAmount") @Valid DaysAmount daysAmount, BindingResult result,
-                                      @RequestParam(name = "contractDetailsId") Long contractDetailsId,
-                                        HttpSession session){
+                                                                      HttpSession session){
         if(result.hasErrors()){
             return "addDaysAmount";
         }

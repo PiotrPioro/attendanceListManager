@@ -61,8 +61,8 @@ public class ListAttendanceController {
         DaysAmount daysAmount = daysAmountService.findDaysAmountById(dayAmountId);
 
         LocalDate date = LocalDate.now();
-        String month = calendarService.nameOfMonth(monthValue);
-        String month2 = calendarService.monthName(monthValue);
+        MonthsName monthsName = monthNameRepository.findMonthNameById(monthValue);
+
 
         Map<Contract, ContractDetails> contractDetailsMap = contractService.contractMap(inspectorId);
 
@@ -72,8 +72,8 @@ public class ListAttendanceController {
         model.addAttribute("currentDate", date);
         model.addAttribute("year", year);
         model.addAttribute("monthValue", monthValue);
-        model.addAttribute("month", month);
-        model.addAttribute("month2", month2);
+        model.addAttribute("month", monthsName.getName());
+        model.addAttribute("month2", monthsName.getNameVariation());
         model.addAttribute("inspector", inspector);
         model.addAttribute("insp", insp);
         model.addAttribute("contractDetails", contractDetails);
