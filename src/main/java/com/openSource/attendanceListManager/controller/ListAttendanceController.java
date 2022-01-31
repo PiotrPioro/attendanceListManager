@@ -151,14 +151,14 @@ public class ListAttendanceController {
         String addYear = String.valueOf(year);
 
         String to = inspector1.getEmail();
-        String subject = "Temat";
+        String subject = "Dodano dzień do listy obecności";
         String text = "Dodano dzień do listy obecności inspektora " + inspector1.getFullName() + " na kontrakcie " + contract.getName() + ": " + addDay + " " + addMonth + " " + addYear;
 
         emailService.sendMessage(subject, text, to);
 
-        String to2 = contract.getContractAdministrator().getEmail();
+        /*String to2 = contract.getContractAdministrator().getEmail();
 
-        emailService.sendMessage(subject, text, to2);
+        emailService.sendMessage(subject, text, to2);*/
 
         session.setAttribute("message", text);
         session.setAttribute("insp", inspectorId);

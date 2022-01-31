@@ -36,7 +36,8 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public String addInspector(@ModelAttribute("inspector") @Valid Inspector inspector, BindingResult result, @RequestParam(name = "repassword") String repassword){
+    public String addInspector(@ModelAttribute("inspector") @Valid Inspector inspector, BindingResult result,
+                               @RequestParam(name = "repassword") String repassword){
         if(result.hasErrors()){
             return "register";
         }
