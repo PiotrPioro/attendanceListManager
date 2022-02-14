@@ -304,6 +304,7 @@
                                     <c:forEach var="daysList" items="${con.value.listDaysAmount}">
                                         <c:if test="${daysList.monthNumber == monthValue && daysList.year == year}">
                                             <a href="/listAttendance/view?insp=${con.key.id}&conDet=${con.value.id}&con=${contract.key.id}&dayAmountId=${daysList.id}&monthValue=${monthValue}&year=${year}" class="btn btn-danger rounded-0 text-light m-1">Uzupełnij listę obecności</a>
+                                            <a href="/message/sendMessage?insp=${con.key.id}&conDet=${con.value.id}&con=${contract.key.id}&dayAmountId=${daysList.id}&monthValue=${monthValue}&year=${year}" class="btn btn-danger rounded-0 text-light m-1">Wyślij wiadomość z ilością dniówek</a>
                                         </c:if>
                                     </c:forEach>
                                 </td>
