@@ -305,7 +305,7 @@
                                         <c:forEach var="daysAmountList" items="${con.value.listDaysAmount}">
                                             <c:if test="${daysAmountList.monthNumber == monthValue && daysAmountList.year == year}">
                                                 <a href="/daysAmount/editDaysAmount?dayAmountId=${daysAmountList.id}&contractDetailsId=${con.value.id}&month=${monthValue}&year=${year}" class="btn btn-danger rounded-0 text-light m-1">Edytuj ilość dniówek ${month.nameVariation}</a>
-                                                <a href="/daysAmount/deleteDaysAmountView?dayAmountId=${daysAmountList.id}&month2=${month.nameVariation}" class="btn btn-danger rounded-0 text-light m-1">Usuń ilość dniówek ${month.nameVariation}</a>
+                                                <%--<a href="/daysAmount/deleteDaysAmountView?dayAmountId=${daysAmountList.id}&month2=${month.nameVariation}" class="btn btn-danger rounded-0 text-light m-1">Usuń ilość dniówek ${month.nameVariation}</a>--%>
                                             </c:if>
                                         </c:forEach>
                                     </td>
