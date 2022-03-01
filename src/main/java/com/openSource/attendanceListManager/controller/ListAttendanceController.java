@@ -156,9 +156,9 @@ public class ListAttendanceController {
 
         emailService.sendMessage(subject, text, to);
 
-        /*String to2 = contract.getContractAdministrator().getEmail();
+        String to2 = contract.getContractAdministrator().getEmail();
 
-        emailService.sendMessage(subject, text, to2);*/
+        emailService.sendMessage(subject, text, to2);
 
         session.setAttribute("message", text);
         session.setAttribute("insp", inspectorId);
