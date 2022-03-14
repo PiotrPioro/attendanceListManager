@@ -189,8 +189,14 @@ public class ListAttendanceController {
             for(Days d : da.getAttendanceList()){
                 if(d.getMonthDay() == monthDay && da.getMonthNumber() == monthValue && da.getYear() == year){
 
+                    Contract contract1 = contractService.findContractById(contractId);
                     daysService.deleteDay(d.getId());
+
                     String message = "Usunięto dzień z listy obecności inspektora " + inspector1.getFullName() + " na kontrakcie " + contract.getName() + ": " + monthDay + " " + monthName + " " + year;
+                    String to = contract1.getContractAdministrator().getEmail();
+                    String subject = "Usunięto dzień z listy obecności";
+
+                    emailService.sendMessage(subject, message, to);
 
                     session.setAttribute("message", message);
                     session.setAttribute("insp", inspectorId);
