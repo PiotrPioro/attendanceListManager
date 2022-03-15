@@ -18,6 +18,8 @@ public class WorkingDays {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
+    int year;
+
     int month;
 
     int workingDay;

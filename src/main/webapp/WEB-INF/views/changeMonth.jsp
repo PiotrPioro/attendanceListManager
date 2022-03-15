@@ -280,9 +280,15 @@
                                     </td>
 
                                     <td>
-                                        <a href="/contractDetails/addContractDetails?contractId=${contract.key.id}&insp=${con.key.id}" class="btn btn-danger rounded-0 text-light m-1">Dodaj szczegóły kontraktu</a>
-                                        <a href="/contractDetails/editContractDetails?contractId=${con.value.id}" class="btn btn-danger rounded-0 text-light m-1">Edytuj szczegóły kontraktu</a>
-                                        <a href="/contractDetails/deleteContractDetailsView/${con.value.id}" class="btn btn-danger rounded-0 text-light m-1">Usuń szczegóły kontraktu</a>
+                                        <c:choose>
+                                            <c:when test="${con.value == null}">
+                                                <a href="/contractDetails/addContractDetails?contractId=${contract.key.id}&insp=${con.key.id}" class="btn btn-danger rounded-0 text-light m-1">Dodaj szczegóły kontraktu</a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="/contractDetails/editContractDetails?contractId=${con.value.id}" class="btn btn-danger rounded-0 text-light m-1">Edytuj szczegóły kontraktu</a>
+                                                <a href="/contractDetails/deleteContractDetailsView/${con.value.id}" class="btn btn-danger rounded-0 text-light m-1">Usuń szczegóły kontraktu</a>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </td>
                                     <td>
                                         <c:if test="${con.value.id != null}">
@@ -291,7 +297,7 @@
                                         <c:forEach var="daysAmountList" items="${con.value.listDaysAmount}">
                                             <c:if test="${daysAmountList.monthNumber == monthValue && daysAmountList.year == year}">
                                                 <a href="/daysAmount/editDaysAmount?dayAmountId=${daysAmountList.id}&contractDetailsId=${con.value.id}&month=${monthValue}&year=${year}" class="btn btn-danger rounded-0 text-light m-1">Edytuj ilość dniówek ${month.nameVariation}</a>
-                                                <a href="/daysAmount/deleteDaysAmountView?dayAmountId=${daysAmountList.id}&month2=${month.nameVariation}" class="btn btn-danger rounded-0 text-light m-1">Usuń ilość dniówek ${month.nameVariation}</a>
+                                                <%--<a href="/daysAmount/deleteDaysAmountView?dayAmountId=${daysAmountList.id}&month2=${month.nameVariation}" class="btn btn-danger rounded-0 text-light m-1">Usuń ilość dniówek ${month.nameVariation}</a>--%>
                                             </c:if>
                                         </c:forEach>
 
@@ -300,6 +306,7 @@
                                         <c:forEach var="daysList" items="${con.value.listDaysAmount}">
                                             <c:if test="${daysList.monthNumber == monthValue && daysList.year == year}">
                                                 <a href="/listAttendance/view?insp=${con.key.id}&conDet=${con.value.id}&con=${contract.key.id}&dayAmountId=${daysList.id}&monthValue=${monthValue}&year=${year}" class="btn btn-danger rounded-0 text-light m-1">Uzupełnij listę obecności</a>
+                                                <a href="/message/sendMessage?insp=${con.key.id}&conDet=${con.value.id}&con=${contract.key.id}&dayAmountId=${daysList.id}&monthValue=${monthValue}&year=${year}" class="btn btn-danger rounded-0 text-light m-1">Wyślij wiadomość z ilością dniówek</a>
                                             </c:if>
                                         </c:forEach>
                                     </td>
