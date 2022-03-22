@@ -159,24 +159,24 @@ public class CalendarService {
                 for(Contract con: inspectorContractList){
 
                     if(c.equals(con)){
-                        ContractDetails contractDetails = contractDetailService.findContractDetailsByInspectorIdAndContractId(inspector.getId(), c.getId());
 
-                        if(contractDetails == null){
+                        if(contractDetailService.findContractDetailsByInspectorIdAndContractId(inspector.getId(), c.getId()) == null){
                             dayAmountInMonth.setDayAmountOnContract(amountOfDays);
                             dayAmountInMonthRepository.save(dayAmountInMonth);
                         }
+                        else {
+                            ContractDetails contractDetails = contractDetailService.findContractDetailsByInspectorIdAndContractId(inspector.getId(), c.getId());
+                            DaysAmount daysAmount = daysAmountService.findByMonthAndYearAndContractDetailsID(month, year, contractDetails.getId());
 
-                        DaysAmount daysAmount = daysAmountService.findByMonthAndYearAndContractDetailsID(month, year, contractDetails.getId());
-
-                        if(daysAmount == null){
-                            dayAmountInMonth.setDayAmountOnContract(amountOfDays);
-                            dayAmountInMonthRepository.save(dayAmountInMonth);
-                        }
-                        else{
-                            amountOfDays = daysAmountService.findByMonthAndYearAndContractDetailsID(month, year, contractDetails.getId()).getAmountOfDaysInMonth();
-                            dayAmountInMonth.setDayAmountOnContract(amountOfDays);
-                            dayAmountInMonthRepository.save(dayAmountInMonth);
-                            sum += amountOfDays;
+                            if (daysAmount == null) {
+                                dayAmountInMonth.setDayAmountOnContract(amountOfDays);
+                                dayAmountInMonthRepository.save(dayAmountInMonth);
+                            } else {
+                                amountOfDays = daysAmountService.findByMonthAndYearAndContractDetailsID(month, year, contractDetails.getId()).getAmountOfDaysInMonth();
+                                dayAmountInMonth.setDayAmountOnContract(amountOfDays);
+                                dayAmountInMonthRepository.save(dayAmountInMonth);
+                                sum += amountOfDays;
+                            }
                         }
                     }
                 }
