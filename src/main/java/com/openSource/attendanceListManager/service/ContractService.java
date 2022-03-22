@@ -18,7 +18,6 @@ public class ContractService {
     private final ContractDetailService contractDetailsService;
     private final InspectorService inspectorService;
 
-    @Transactional
     public List<Contract> findAllContracts(){
         List<Contract> contractList = contractRepository.findAll();
         return contractList.stream()
@@ -31,12 +30,10 @@ public class ContractService {
         contractRepository.save(contract);
     }
 
-    @Transactional
     public Contract findContractById(Long id){
         return contractRepository.findContractById(id);
     }
 
-    @Transactional
     public Map<Contract, ContractDetails> contractMap(Long inspectorId){
 
         Map<Contract, ContractDetails> map = new LinkedHashMap<>();
@@ -64,7 +61,6 @@ public class ContractService {
         contractRepository.deleteById(id);
     }
 
-    @Transactional
     public List<Contract> findContractByContractAdministrator(Inspector inspector){
         List<Contract> contractList = contractRepository.findContractByContractAdministrator(inspector);
         return contractList.stream()
@@ -72,7 +68,6 @@ public class ContractService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public Map<Inspector, ContractDetails> inspectorAndDetailsMap(Long contractId){
         List<Inspector> inspectorList = contractRepository.findContractById(contractId).getInspectorList();
         List<Inspector> sortedList = inspectorList.stream()
@@ -97,7 +92,6 @@ public class ContractService {
         }
     }
 
-    @Transactional
     public List<Inspector> allInspectorExceptAlreadyConnected(Contract contract){
         List<Inspector> inspectorList = inspectorService.findAllInspectors();
         List<Inspector> contractInspectorList = contract.getInspectorList();
@@ -109,6 +103,7 @@ public class ContractService {
     //przekazuję listę inspektorów którą chcę usunąć i kontrakt z którego chcę usunąć inspektorów
     @Transactional
     public void deleteInspectorFromContract(List<Inspector> inspectorList, Contract contract){
+
         List<Inspector> inspectorList1 = contract.getInspectorList();
         for(Inspector i : inspectorList){
             List<Contract> contractList = i.getContractList();

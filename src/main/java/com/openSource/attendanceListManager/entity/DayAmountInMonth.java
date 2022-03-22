@@ -6,21 +6,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 
-@Entity
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "working_days")
-public class WorkingDays {
+@Entity
+@Table(name = "day_amount_in_month")
+public class DayAmountInMonth {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    int year;
+    private String contractName;
 
-    int month;
-
-    int workingDay;
+    private int dayAmountOnContract;
 }

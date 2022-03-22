@@ -20,7 +20,6 @@ public class ContractDetailService {
         contractDetailsRepository.save(contractDetails);
     }
 
-    @Transactional
     public List<ContractDetails> findContractDetailsByInspectorId(Long inspectorId){
         return contractDetailsRepository.findContractDetailsWithInspectorId(inspectorId);
     }
@@ -34,12 +33,10 @@ public class ContractDetailService {
         contractDetailsRepository.deleteById(id);
     }
 
-    @Transactional
     public ContractDetails findContractDetailsById(Long id){
         return contractDetailsRepository.getById(id);
     }
 
-    @Transactional
     public ContractDetails findContractDetailsByInspectorIdAndContractId(Long inspectorId, Long contractId){
         return contractDetailsRepository.findContractDetailsWithInspectorIdAndContractId(inspectorId, contractId);
     }

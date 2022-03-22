@@ -3,7 +3,6 @@ package com.openSource.attendanceListManager.controller;
 import com.openSource.attendanceListManager.entity.Contract;
 import com.openSource.attendanceListManager.entity.ContractDetails;
 import com.openSource.attendanceListManager.entity.Inspector;
-import com.openSource.attendanceListManager.service.ContractDetailService;
 import com.openSource.attendanceListManager.service.ContractService;
 import com.openSource.attendanceListManager.service.InspectorService;
 import lombok.AllArgsConstructor;

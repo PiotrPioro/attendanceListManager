@@ -1,5 +1,6 @@
 package com.openSource.attendanceListManager.service;
 
+import com.openSource.attendanceListManager.entity.DaysAmount;
 import com.openSource.attendanceListManager.entity.Inspector;
 import com.openSource.attendanceListManager.repository.InspectorRepository;
 import lombok.AllArgsConstructor;
@@ -7,7 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,6 +19,7 @@ public class InspectorService{
 
     private final InspectorRepository inspectorRepository;
     private final PasswordEncoder passwordEncoder;
+    private final DaysAmountService daysAmountService;
 
     @Transactional
     public void addInspector(Inspector inspector){
@@ -53,7 +57,6 @@ public class InspectorService{
         inspectorRepository.delete(inspector);
     }
 
-    @Transactional
     public List<Inspector> findAllInspectors(){
         List<Inspector> inspectorList = inspectorRepository.findAll();
         return inspectorList.stream()

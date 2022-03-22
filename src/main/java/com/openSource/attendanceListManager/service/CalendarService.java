@@ -1,20 +1,22 @@
 package com.openSource.attendanceListManager.service;
 
-import com.openSource.attendanceListManager.entity.Days;
-import com.openSource.attendanceListManager.entity.WorkingDays;
+import com.openSource.attendanceListManager.entity.*;
+import com.openSource.attendanceListManager.repository.DayAmountInMonthRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
 public class CalendarService {
+
+    private final ContractService contractService;
+    private final ContractDetailService contractDetailService;
+    private final DaysAmountService daysAmountService;
+    private final InspectorService inspectorService;
+    private final DayAmountInMonthRepository dayAmountInMonthRepository;
 
     public List<Days> getCalendarList(int month, int year){
         List<Days> calendarList = new ArrayList<>();
@@ -92,7 +94,7 @@ public class CalendarService {
         return bozeCialo;
     }
 
-    public void getWorkingDays(int year){
+/*    public void getWorkingDays(int year){
 
         GregorianCalendar calendar = new GregorianCalendar();
         int maxDaysInCurrentMonth = 0;
@@ -126,9 +128,65 @@ public class CalendarService {
                 workingDays.setMonth(easter.getMonthValue());
                 workingDays.setWorkingDay(sum);
             }
-
-
         }
+    }*/
 
+    public List<DaysList> daysList(int year, int month){
+
+        List<Inspector> inspectorList = inspectorService.findAllInspectors();
+        List<Contract> contractList = contractService.findAllContracts();
+        List<DaysList> daysLists = new LinkedList<>();
+
+        for(Inspector inspector: inspectorList){
+
+            List<Contract> inspectorContractList = inspector.getContractList();
+            int sum = 0;
+
+            DaysList daysList = new DaysList();
+            List<DayAmountInMonth> dayAmountInMonthList = new LinkedList<>();
+
+            daysList.setFirstName(inspector.getFirstName());
+            daysList.setLastName(inspector.getLastName());
+
+            for(Contract c: contractList){
+
+                int amountOfDays = 0;
+                DayAmountInMonth dayAmountInMonth = new DayAmountInMonth();
+                dayAmountInMonth.setContractName(c.getName());
+                dayAmountInMonth.setDayAmountOnContract(amountOfDays);
+                dayAmountInMonthRepository.save(dayAmountInMonth);
+
+                for(Contract con: inspectorContractList){
+
+                    if(c.equals(con)){
+                        ContractDetails contractDetails = contractDetailService.findContractDetailsByInspectorIdAndContractId(inspector.getId(), c.getId());
+
+                        if(contractDetails == null){
+                            dayAmountInMonth.setDayAmountOnContract(amountOfDays);
+                            dayAmountInMonthRepository.save(dayAmountInMonth);
+                        }
+
+                        DaysAmount daysAmount = daysAmountService.findByMonthAndYearAndContractDetailsID(month, year, contractDetails.getId());
+
+                        if(daysAmount == null){
+                            dayAmountInMonth.setDayAmountOnContract(amountOfDays);
+                            dayAmountInMonthRepository.save(dayAmountInMonth);
+                        }
+                        else{
+                            amountOfDays = daysAmountService.findByMonthAndYearAndContractDetailsID(month, year, contractDetails.getId()).getAmountOfDaysInMonth();
+                            dayAmountInMonth.setDayAmountOnContract(amountOfDays);
+                            dayAmountInMonthRepository.save(dayAmountInMonth);
+                            sum += amountOfDays;
+                        }
+                    }
+                }
+                dayAmountInMonthList.add(dayAmountInMonth);
+            }
+            daysList.setSum(sum);
+            daysList.setMax(27);
+            daysList.setDayAmountInMonth(dayAmountInMonthList);
+            daysLists.add(daysList);
+        }
+        return daysLists;
     }
 }

@@ -1,12 +1,11 @@
 package com.openSource.attendanceListManager.service;
 
-import com.openSource.attendanceListManager.entity.ContractDetails;
-import com.openSource.attendanceListManager.entity.Days;
-import com.openSource.attendanceListManager.entity.DaysAmount;
+import com.openSource.attendanceListManager.entity.*;
 import com.openSource.attendanceListManager.repository.DaysAmountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -53,5 +52,33 @@ public class DaysAmountService {
             daysService.editDaysAmountList(daysAmount);
         }
         contractDetails.setListDaysAmount(daysAmountList);
+    }
+
+    public Integer sumOfInspectorDays(int year, int month, Inspector inspector){
+
+        int sum = 0;
+        List<Contract> contractList = inspector.getContractList();
+        List<ContractDetails> contractDetailsList = new LinkedList<>();
+        List<DaysAmount> daysAmountList = new LinkedList<>();
+
+        for(Contract c: contractList){
+
+            contractDetailsList = c.getContractDetails();
+            for(ContractDetails cd: contractDetailsList){
+
+                daysAmountList = cd.getListDaysAmount();
+                for(DaysAmount da: daysAmountList){
+                    if(da.getYear() == year && da.getMonthNumber() == month){
+
+                        sum += da.getAmountOfDaysInMonth();
+                    }
+                }
+            }
+        }
+        return sum;
+    }
+
+    public DaysAmount findByMonthAndYearAndContractDetailsID(int month, int year, Long contractDetailsId){
+        return daysAmountRepository.findByMonthNumberAndYearAndContractDetailsId(month, year, contractDetailsId);
     }
 }

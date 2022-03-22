@@ -1,9 +1,6 @@
 package com.openSource.attendanceListManager.controller;
 
-import com.openSource.attendanceListManager.entity.Contract;
-import com.openSource.attendanceListManager.entity.ContractDetails;
-import com.openSource.attendanceListManager.entity.Inspector;
-import com.openSource.attendanceListManager.entity.MonthsName;
+import com.openSource.attendanceListManager.entity.*;
 import com.openSource.attendanceListManager.repository.MonthNameRepository;
 import com.openSource.attendanceListManager.service.CalendarService;
 import com.openSource.attendanceListManager.service.ContractService;
@@ -12,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -66,5 +64,24 @@ public class SuperAdminController {
         else {
             return "redirect:/inspector/checkRole";
         }
+    }
+
+    @GetMapping("/inspectorList")
+    public String inspectorList(Model model, @RequestParam(name = "monthValue") int monthValue,
+                                @RequestParam(name = "year") int year, HttpSession session){
+
+        List<Contract> contractList = contractService.findAllContracts();
+        MonthsName month = monthNameRepository.findMonthNameById(monthValue);
+        Inspector inspector = (Inspector) session.getAttribute("loggedInspector");
+        List<DaysList> inspectorList = calendarService.daysList(year, monthValue);
+
+        model.addAttribute("inspectorList", inspectorList);
+        model.addAttribute("contracts", contractList);
+        model.addAttribute("monthValue", monthValue);
+        model.addAttribute("month", month);
+        model.addAttribute("year", year);
+        model.addAttribute("inspector", inspector);
+
+        return "inspectorList";
     }
 }

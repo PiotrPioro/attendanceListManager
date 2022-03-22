@@ -7,8 +7,10 @@ import org.springframework.web.context.annotation.SessionScope;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "inspectors")

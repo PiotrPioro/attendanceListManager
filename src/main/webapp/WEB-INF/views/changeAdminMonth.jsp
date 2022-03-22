@@ -108,6 +108,21 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
+            Inspektorzy
+        </div>
+
+        <!-- Nav Item - addContract -->
+        <li class="nav-item">
+            <a class="nav-link" href="/superAdmin/inspectorList?monthValue=${monthValue}&year=${year}">
+                <span>Lista Inspektorów</span>
+            </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
             Uprawnienia
         </div>
 

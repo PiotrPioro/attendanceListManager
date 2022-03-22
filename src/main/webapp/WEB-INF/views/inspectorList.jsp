@@ -176,21 +176,27 @@
                             <th>Imię</th>
                             <th>Nazwisko</th>
                             <c:forEach items="${contracts}" var="contract">
-                                <th>${contract.name}</th>
-                                <th>Ilość dni w </th>
+                                <th>Ilość dni ${month.nameVariation} na ${contract.name}</th>
                             </c:forEach>
+                            <th>Suma dniówek ${month.nameVariation}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${contracts}" var="contract">
+                        <c:forEach items="${inspectorList}" var="inspectorLists">
                             <tr>
-                                <td>${contract.name}</td>
-                                <td>
-                                    <a href="/contract/editContract?id=${contract.id}" class="btn btn-danger rounded-0 text-light m-1">Edytuj kontrakt</a>
-                                    <a href="/contract/deleteContractView/${contract.id}/${contract.name}" class="btn btn-danger rounded-0 text-light m-1">Usuń kontrakt</a>
-                                    <a href="/contract/addInspector?id=${contract.id}" class="btn btn-danger rounded-0 text-light m-1">Dodaj inspektora</a>
-                                    <a href="/contract/deleteInspector?id=${contract.id}" class="btn btn-danger rounded-0 text-light m-1">Usuń inspektora</a>
-                                </td>
+                                <td>${inspectorLists.firstName}</td>
+                                <td>${inspectorLists.lastName}</td>
+                                <c:forEach items="${inspectorLists.dayAmountInMonth}" var="dayAmountList">
+                                    <td>${dayAmountList.dayAmountOnContract}</td>
+                                </c:forEach>
+                                <c:choose>
+                                    <c:when test="${inspectorLists.sum > inspectorLists.max}">
+                                        <td style="color: red">${inspectorLists.sum}</td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>${inspectorLists.sum}</td>
+                                    </c:otherwise>
+                                </c:choose>
                             </tr>
                         </c:forEach>
                         </tbody>

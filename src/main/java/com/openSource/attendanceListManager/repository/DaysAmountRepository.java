@@ -22,4 +22,7 @@ public interface DaysAmountRepository extends JpaRepository<DaysAmount, Integer>
 
     @Query(value = "select * from days_amount where contract_details_id=?1", nativeQuery = true)
     List<DaysAmount> findAllDaysAmountByContractDetailsId(Long contractDetailsId);
+
+    @Query(value = "select * from days_amount where month_number=?1 and year=?2 and contract_details_id=?3", nativeQuery = true)
+    DaysAmount findByMonthNumberAndYearAndContractDetailsId(int month, int year, Long ContractDetailsId);
 }
