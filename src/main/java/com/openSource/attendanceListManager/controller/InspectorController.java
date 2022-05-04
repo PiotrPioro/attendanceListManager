@@ -84,9 +84,10 @@ public class InspectorController {
     }
 
     @PostMapping("/editInspector")
-    public String editInspector(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, HttpSession session, Model model){
+    public String editInspector(@RequestParam("firstName") String firstName, @RequestParam("phoneNumber") int phoneNumber,
+                                @RequestParam("lastName") String lastName, HttpSession session, Model model){
         Inspector logInspector = (Inspector) session.getAttribute("loggedInspector");
-        inspectorService.editInspector(firstName, lastName, logInspector.getEmail());
+        inspectorService.editInspector(firstName, lastName, phoneNumber, logInspector.getEmail());
         Inspector updatedInspector = inspectorService.findByEmail(logInspector.getEmail());
         model.addAttribute("loggedInspector", updatedInspector);
         return "redirect:/inspector/checkRole";

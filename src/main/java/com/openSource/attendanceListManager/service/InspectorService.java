@@ -37,10 +37,11 @@ public class InspectorService{
     }
 
     @Transactional
-    public void editInspector(String firstName, String lastName, String email){
+    public void editInspector(String firstName, String lastName, int phoneNumber, String email){
         Inspector inspector = inspectorRepository.findByEmail(email);
         inspector.setFirstName(firstName);
         inspector.setLastName(lastName);
+        inspector.setPhoneNumber(phoneNumber);
         inspectorRepository.save(inspector);
     }
 
